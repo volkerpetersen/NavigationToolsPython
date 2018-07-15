@@ -72,8 +72,8 @@ if __name__ == "__main__":
             skipWPsFlag = True
 
     # configuration data
-    supported_devices = {"My Documents", "VolkerPetersen"}
-    #                     Dell Desktop    Dell Laptop
+    supported_devices = {'Desktop': ["D:\VolkerPetersen", "D:\My Documents\Google Drive"],
+                           'Laptop': ["D:\VolkerPetersen","D:\VolkerPetersen\Google Drive"]}
 
     # fetch the content from the default settings file
     cwd = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -87,8 +87,8 @@ if __name__ == "__main__":
         noSpeedTxt = settings['noSpeed']
         unsupported_device = True
         for device in supported_devices:
-            if (device in cwd):
-                path = path.replace("VolkerPetersen", device)
+            if (os.path.exists(supported_devices[device][1])):
+                path = path.replace("D:\VolkerPetersen\Google Drive", supported_devices[device][1])
                 unsupported_device = False
         if (unsupported_device):
             print("\nUnknown computer and root file system.  Terminating now.\n")

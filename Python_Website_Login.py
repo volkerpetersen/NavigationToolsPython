@@ -8,11 +8,11 @@ __doc__ = """
  weeks to make sure the account doesn't lapsed due to inactivity.
 ---------------------------------------------------------------------------
 """
-__date__ = "17/23/2017"
-__author__ = "Volker Petersen"
+__date__      = "17/23/2017"
+__author__    = "Volker Petersen"
 __copyright__ = "Copyright (c) 2017 Volker Petersen"
-__license__ = "Python 3.6 | GPL http://www.gnu.org/licenses/gpl.txt"
-__version__ = "kaiserware.bplace.net web scraping app"
+__license__   = "Python 3.6 | GPL http://www.gnu.org/licenses/gpl.txt"
+__version__   = "kaiserware.bplace.net web scraping app"
 
 try:
     # import python system modules
