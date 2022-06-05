@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 #from __future__ import unicode_literals
 #--------------------------------------------------------------------------------------------
-__author__ = "Volker Petersen <volker.petersen01@gmail.com>"
-__version__ = "OpenCPN_Route_Analyzer.py (ver 2.1.0)"
-__date__ = "Date: 2016/06/15"
+__author__    = "Volker Petersen <volker.petersen01@gmail.com>"
+__app__       = "RouteAnalyzer.py"
+__version__   = "version 2.3.0, Python 3.7"
+__date__      = "Date: 2016/06/15"
 __copyright__ = "Copyright (c) 2016 Volker Petersen"
-__license__ = "Python 2.7 | GPL http://www.gnu.org/licenses/gpl.txt"
+__license__   = "GNU General Public License, published by the Free Software Foundation"
 __doc__ = """
 -------------------------------------------------------------------------------
    Program parameters:
@@ -19,32 +20,43 @@ __doc__ = """
      'skipWP':       skip output for all WPs that are marked with label 'empty'
 
    If no parameters are supplied, this program will use the parameters
-   stored in the settings file 'OpenCPN_Route_Analyzer.json'.
+   stored in the settings file 'NavConfig.ini' and read by the script 'NavConfig.py'.
 
-   If the WPs are named in the datetime format 'yyyy_mm_dd_HHMM' this
-   program will also compute the Time, Speed, and Etmals between such WPs.
+   The program will compute the Time, Speed, and Etmals between WPs that contain
+   a <desc></desc> tag/field with these entry options:
+     arrival 2019-09-25 19:30    (arrival date/time at this WP)
+     departure 2019-09-26 09:37  (departure date/time from this WP)
+     timedleg 2019-09-26 09:37   (arrival and departure at/from this WP)
+     poi                         (Point of Interest on route not being listed)
+     homeport                    (designates the Waypoint from which a round-trip
+                                  toern originates. Add departure and arrival
+                                  times using the above keywords in add'l lines)
 -------------------------------------------------------------------------------
 """
 
 try:
     import sys
     import os
-    import inspect
-    from bs4 import BeautifulSoup
-    from Navigation_Route_Parser import ComputeRouteDistances, read_json
+    import NavToolsLib as nt
 
 except ImportError as e:
     print("Import error: %s\nAborting the program %s" % (str(e), __version__))
     sys.exit()
+
+
+def processRoute(name, route, verbose, skipWPsFlag, noSpeed):
+    tmp = " Route '" + name + "' Summary "
+    print("\n\t%s" % tmp)
+    print("\t" + "=" * len(tmp) + "\n")
+    nt.ComputeRouteDistances(route.encode("latin-1"), verbose, skipWPsFlag, noSpeed)
+    return True
 
 """
 |------------------------------------------------------------------------------------------
 | main
 |------------------------------------------------------------------------------------------
 """
-if __name__ == "__main__":
-    print("\nStarting %s" % __version__)
-    print(__doc__)
+def main():
     #
     # fetch the supplied program parameters
     #
@@ -71,86 +83,77 @@ if __name__ == "__main__":
         elif (val.lower() == "skipWP"):
             skipWPsFlag = True
 
-    # configuration data
-    supported_devices = {'Desktop': ["D:\VolkerPetersen", "D:\My Documents\Google Drive"],
-                           'Laptop': ["D:\VolkerPetersen","D:\VolkerPetersen\Google Drive"]}
-
-    # fetch the content from the default settings file
-    cwd = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-    default_settings = os.path.join(cwd, 'OpenCPN_Route_Analyzer_Settings.json')
     try:
-        settings = read_json(default_settings)
-        path = settings['lastGPX']
-        lastRoute = settings['lastRoute']
-        verboseTxt = settings['verbose']
-        skipWPTxt = settings['skipWP']
-        noSpeedTxt = settings['noSpeed']
-        unsupported_device = True
-        for device in supported_devices:
-            if (os.path.exists(supported_devices[device][1])):
-                path = path.replace("D:\VolkerPetersen\Google Drive", supported_devices[device][1])
-                unsupported_device = False
-        if (unsupported_device):
-            print("\nUnknown computer and root file system.  Terminating now.\n")
-            sys.exit()
+        #=======================================================================
+        # get the device configuration data. This function is utilized by these scripts
+        #    RouteConvertUpload.py
+        #    OpenCPN_Route_Analyzer.py
+        #    Navigation_Route_Analyzer.pyw
+        # returns a dictionary with these keys:
+        # {cwd, gpxPath, sqlPath, lastGPX, lastRoute, skipWP, noSpeed, verbose, error}
+        #=======================================================================
+        settings = nt.getNavConfig(verbose=False)
+        if (settings['error'] is True):
+            cwd = settings['cwd']
+            gpxPath = settings['gpxPath']
+            sqlPath = settings['sqlPath']
+            lastRoute = settings['lastRoute']
+            skipWPTxt = settings['skipWP']
+            noSpeedTxt = settings['noSpeed']
+            verboseTxt = settings['verbose']
+        else:
+            raise Exception("Error reading from configuration file ('{}')".format(settings['error'])) 
 
     except Exception as e:
-        path = os.getcwd()
+        openCPNroutes = os.getcwd()
         lastRoute = "None"
         verboseTxt = ""
         skipWPTxt = ""
         noSpeedTxt = ""
-        print("\nUsing default path and route name.  Error:\n'%s'\nreading the config file." % str(e))
+        print("\nUsing default path and route name. Error:\n'%s'\nreading the config file." % str(e))
 
     # the program parameters have preference over the settings file parameters
     if (routeName == ""):
         routeName = lastRoute
     if (fileName != ""):
-        path = fileName
+        openCPNroutes = fileName
     if (verbose == ""):
         verbose = (verboseTxt == "verbose")
     if (skipWPsFlag == ""):
         skipWPsFlag = (skipWPTxt == "True")
     if (noSpeed is not False):
         noSpeed = (noSpeedTxt == "True")
-    if (path == ""):
-        path = "C:\\ProgramData\\opencpn\\navobj.xml"
 
-    #
-    # test parameters
-    #
-    #routeName = "2012 Atlantic Crossing"
-    #path = "D:\\VolkerPetersen\\Google Drive\\Sailing\\OpenCPN_Routes\\2012_06_AtlanticCrossing.gpx"
+    print("OpenCPN routes.: '%s'" %gpxPath)
+    print("Route..........: '%s'" %lastRoute)
+    print("skip WPs.......: %s" %skipWPsFlag)
+    print("compute speed..: %s" %(not noSpeed))
 
-    # routeName="2017_08_TransSuperiorRace"
-    #path = "D:\\VolkerPetersen\\Google Drive\\Sailing\\OpenCPN_Routes\\2017_08_TransSuperiorRace.gpx"
-    #noSpeed = False
-    #
-    # end of test parameters
-    #
-
-    # read the route file and find the various routes stored in it.  If a
-    # route matches the routName, pass the data to the ComputeRouteDistance
-    # method to compute the distances between the WP in that route
     try:
-        inputfile = open(path, "r")
-        xml = inputfile.read()
-        inputfile.close()
-
-        soup = BeautifulSoup(xml, "xml")
         routeFlag = False
-        routes = soup.find_all('rte')
-        for route in routes:
-            if (routeName in route.find('name').text):
-                tmp = " Route '" + route.find('name').text + "' Summary "
-                print("\t%s" % tmp)
-                print("\t" + "=" * len(tmp) + "\n")
-                routeFlag = True
-                ComputeRouteDistances(route.encode("latin-1"), verbose, skipWPsFlag, noSpeed)
-
-        print("\nReading data from file '%s'\n" % path)
+        path = os.path.join(gpxPath, lastRoute+".gpx")
+        try:
+            inputfile = open(path, "r")
+            route = inputfile.read()
+            inputfile.close()
+            routeFlag = processRoute(routeName, route, verbose, skipWPsFlag, noSpeed)
+        except:
+            print("\nThe Route '%s.gpx' is not found in the archived OpenCPN routes files." % routeName)
+    
         if (not routeFlag):
-            print("The Route '%s' is not found in the above route file." % routeName)
+            print("\nTerminating program since the route file couldn't be found anywhere.")
+    
         print("\nProgram is done.")
     except Exception as e:
         print("\nProgram ended with error: %s\n" % str(e))
+
+
+"""
+|------------------------------------------------------------------------------------------
+| program launch point
+|------------------------------------------------------------------------------------------
+"""
+if __name__ == "__main__":
+    print("\nStarting %s" % __app__)
+    print(__doc__)
+    main()

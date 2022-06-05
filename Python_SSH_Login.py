@@ -5,19 +5,19 @@
 # (both), too poor in features (no use of the agent, for instance)
 
 # Here is the right solution today:
-
+__doc__ = "ssh sample app"
 import subprocess
 import sys
 import paramiko
 
 def ssh_command(command):
-    
+
     # A2 Hosting site
     IP="a2ss54.a2hosting.com"
     PORT=7822
     USER="southme1"
-    PWD ="44K3s68A@"
-    
+    PWD ="Python7713,./"
+
     """
     # bplaced.net  - ssh not supported
     IP="144.76.167.69"  #"www.kaiserware.bplace.net"
@@ -25,7 +25,7 @@ def ssh_command(command):
     USER="kaiserware"
     PWD ="vesret2204"
     """
-    
+
     client = paramiko.client.SSHClient()
     #client.load_host_keys('file name with SSK key authentication')
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -34,10 +34,11 @@ def ssh_command(command):
     if ssh_session.active:
         ssh_session.exec_command(command)
         print ("\nConnected to SSH shell at host %s and executed command %s\n" %(IP, command))
-        print ssh_session.recv(1024)
+        str = ssh_session.recv(1024).decode("utf-8")
+        print(str)
     else:
         print ("\nCould'nt connect to the SSH session at %s\n" %IP)
-        
+
     return
 """
 |------------------------------------------------------------------------------------------
@@ -45,5 +46,5 @@ def ssh_command(command):
 |------------------------------------------------------------------------------------------
 """
 if __name__ == "__main__":
-    print __doc__
+    print (__doc__)
     ssh_command("ls -l")

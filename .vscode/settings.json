@@ -1,4 +1,3 @@
 {
-    "git.ignoreLimitWarning": true,
-    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\python.exe"
+    "python.linting.enabled": true
 }

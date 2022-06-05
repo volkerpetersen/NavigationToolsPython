@@ -18,7 +18,8 @@ __version__   = "uploadAllToernMySQL.py ver 1.0"
 try:
     # import python system modules
     import os
-    from uploadMySQL import uploadMySQLfile 
+    from uploadMySQL import uploadMySQLfile
+	import NavToolsLib as nt
 except ImportError as e:
     msg = "Import error: "+str(e)+"\nAborting the program " + __version__
     raise Exception(msg)
@@ -52,23 +53,11 @@ def uploadAllSqlFiles(path):
 if __name__ == "__main__":
     print __doc__
     
-    working_directory1 = "D:/My Documents"     # Dell Descktop
-    working_directory2 = "D:/VolkerPetersen"   # Dell Laptop
-    if (os.path.exists(working_directory1) == True):
-         # Home Desktop Dell XPS computer setup parameters
-         cwd = working_directory1
-    elif (os.path.exists(working_directory2) == True):
-         # Volker's laptop computer
-         cwd = working_directory2
-    else:
-        print "\nUnknown computer and root file system.  Terminating now."
-        exit(0)
+	(cwd, pathGPX, pathSQL) = nt.getNavConfig(False)
+	
+    #print(pathSQL)
 
-    path = os.path.join(cwd, "Google Drive/ProgramCode/PHP_Projects/toerns/sql_files/")
-    
-    #print path
-
-    msg = uploadAllSqlFiles(path)
+    msg = uploadAllSqlFiles(pathSQL)
 
     if (not msg):
         print "\nError in uploadAllSqlFiles(path)!"

@@ -1,4 +1,19 @@
-d:
-cd "D:\My Documents\Dropbox\Dropbox\ProgramCode\Python_Projects\NavigationTools"
-python.exe Python_Website_Login.py
-pause
+@ECHO OFF 
+TITLE Execute python script
+ECHO Please Wait...
+
+
+:: Section 1: Execute python script.
+ECHO ===============================
+ECHO Python Python_Website_Login.py
+ECHO ===============================
+e:
+cd "E:\My Documents\Google Drive\ProgramCode\Python_Projects\NavigationTools"
+E:\anaconda3\python.exe bplaced_ToernWebsite_Login.py
+
+:: Section 2: Terminate this script
+ECHO ===============================
+ECHO Done!
+ECHO ===============================
+
+PAUSE

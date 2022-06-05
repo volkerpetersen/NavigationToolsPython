@@ -1,0 +1,436 @@
+1633561500082	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\VOLKER~1\\AppData\\Local\\Temp\\rust_mozprofile3ukneG"
+1633561501062	Marionette	INFO	Marionette enabled
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Volker Petersen\\AppData\\Local\\Temp\\rust_mozprofile3ukneG\\search.json.mozlz4", (void 0)))
+1633561505383	Marionette	INFO	Listening on port 61032
+1633561505456	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633561540803	Marionette	INFO	Stopped listening on port 61032
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1633561545069	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\VOLKER~1\\AppData\\Local\\Temp\\rust_mozprofile8p0upw"
+1633561545705	Marionette	INFO	Marionette enabled
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Volker Petersen\\AppData\\Local\\Temp\\rust_mozprofile8p0upw\\search.json.mozlz4", (void 0)))
+1633561549499	Marionette	INFO	Listening on port 61112
+1633561549924	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633561582393	Marionette	INFO	Stopped listening on port 61112
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x39007A,name=PContent::Msg_DestroyBrowsingContextGroup) Closed channel: cannot send/recv
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1636408678390	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileXlfjAG"
+1636408678762	Marionette	INFO	Marionette enabled
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileXlfjAG\\search.json.mozlz4", (void 0)))
+1636408680867	Marionette	INFO	Listening on port 1264
+1636408681131	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1636408715588	Marionette	INFO	Stopped listening on port 1264
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1636408719248	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofile7EOSsN"
+1636408719585	Marionette	INFO	Marionette enabled
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofile7EOSsN\\search.json.mozlz4", (void 0)))
+1636408721725	Marionette	INFO	Listening on port 1347
+1636408721947	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1636408753891	Marionette	INFO	Stopped listening on port 1347
+1640097865943	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileywh85m"
+1640097866293	Marionette	INFO	Marionette enabled
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileywh85m\\search.json.mozlz4", (void 0)))
+1640097868305	Marionette	INFO	Listening on port 1976
+1640097868658	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1640097902326	Marionette	INFO	Stopped listening on port 1976
+1640097906036	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilevTgn48"
+1640097906329	Marionette	INFO	Marionette enabled
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilevTgn48\\search.json.mozlz4", (void 0)))
+1640097908334	Marionette	INFO	Listening on port 2059
+1640097908718	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1640097940685	Marionette	INFO	Stopped listening on port 2059
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1640097944365	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileC1Gy7A"
+1640097944647	Marionette	INFO	Marionette enabled
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileC1Gy7A\\search.json.mozlz4", (void 0)))
+1640097946585	Marionette	INFO	Listening on port 2142
+1640097947060	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1640097951371	Marionette	INFO	Stopped listening on port 2142
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1642278510800	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilexV4V9s"
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 38
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+1642278511277	Marionette	INFO	Marionette enabled
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilexV4V9s\\search.json.mozlz4", (void 0)))
+1642278513790	Marionette	INFO	Listening on port 1197
+1642278514037	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1642278546901	Marionette	INFO	Stopped listening on port 1197
+1642278550644	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileX7TLva"
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 38
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+1642278550981	Marionette	INFO	Marionette enabled
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileX7TLva\\search.json.mozlz4", (void 0)))
+1642278552818	Marionette	INFO	Listening on port 1286
+1642278552845	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1642278584855	Marionette	INFO	Stopped listening on port 1286
+1642278588555	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilesAiIX5"
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 38
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+!!!! UntrustedModulesProcessor::SendGetModulesTrust for Socket - 1
+1642278588854	Marionette	INFO	Marionette enabled
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilesAiIX5\\search.json.mozlz4", (void 0)))
+1642278590696	Marionette	INFO	Listening on port 1371
+1642278590746	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1642278595390	Marionette	INFO	Stopped listening on port 1371
+JavaScript error: resource://gre/modules/UrlClassifierListManager.jsm, line 691: TypeError: can't access property "provider", this.tablesData[table] is undefined
+
+###!!! [Child][PContentChild] Error: RunMessage(msgname=PHttpChannel::Msg_DeleteSelf) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][PContentChild] Error: RunMessage(msgname=PHttpChannel::Msg_DeleteSelf) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][PGPUParent] Error: RunMessage(msgname=PGPU::Msg_ShutdownVR) Channel closing: too late to send/recv, messages will be lost
+
+geckodriver: error: Found argument '--websocket-port' which wasn't expected, or isn't valid in this context
+
+USAGE:
+    geckodriver [FLAGS] [OPTIONS]
+
+For more information try --help
+
+geckodriver: error: Found argument '--websocket-port' which wasn't expected, or isn't valid in this context
+
+USAGE:
+    geckodriver [FLAGS] [OPTIONS]
+
+For more information try --help
+
+1644173402919	geckodriver	INFO	Listening on 127.0.0.1:1515
+1644173406017	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "1516" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofiledZXIDl"
+1644173406376	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofiledZXIDl\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:1516/devtools/browser/9a54d0af-40d1-4e1e-88a5-d9c0024d59fa
+1644173408885	Marionette	INFO	Listening on port 1521
+1644173409228	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1644173444667	Marionette	INFO	Stopped listening on port 1521
+1644173445350	geckodriver	INFO	Listening on 127.0.0.1:1584
+1644173448410	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "1585" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileomIQtw"
+1644173448688	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileomIQtw\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:1585/devtools/browser/579cb03e-4c3c-4370-b706-9346740fee05
+1644173450642	Marionette	INFO	Listening on port 1590
+1644173451078	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1644173484364	Marionette	INFO	Stopped listening on port 1590
+1644173485066	geckodriver	INFO	Listening on 127.0.0.1:1648
+1644173488142	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "1649" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilejdfDQw"
+1644173488447	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilejdfDQw\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:1649/devtools/browser/ceb39a4a-85f7-45e3-90cf-3e22268e42c1
+1644173490521	Marionette	INFO	Listening on port 1654
+1644173490850	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1644173501873	Marionette	INFO	Stopped listening on port 1654
+
+###!!! [Child][PContentChild] Error: RunMessage(msgname=PHttpChannel::Msg_DeleteSelf) Channel closing: too late to send/recv, messages will be lost
+
+1647889669718	geckodriver	INFO	Listening on 127.0.0.1:3388
+1647889672800	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "3389" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileNRHVpO"
+1647889673133	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileNRHVpO\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:3389/devtools/browser/ab39c4f6-ea57-4558-abbe-09e7403da5b6
+1647889675525	Marionette	INFO	Listening on port 3394
+1647889676053	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1647889709918	Marionette	INFO	Stopped listening on port 3394
+1647889710612	geckodriver	INFO	Listening on 127.0.0.1:3462
+1647889713654	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "3463" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileI4lwGX"
+1647889713985	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileI4lwGX\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:3463/devtools/browser/0e29f11a-f2ea-45f0-8604-6bbe1f95ec90
+1647889715924	Marionette	INFO	Listening on port 3468
+1647889716381	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1647889749240	Marionette	INFO	Stopped listening on port 3468
+[Parent 7268, IPC I/O Parent] WARNING: pipe error: 232: file /builds/worker/checkouts/gecko/ipc/chromium/src/chrome/common/ipc_channel_win.cc:556
+1647889749846	geckodriver	INFO	Listening on 127.0.0.1:3540
+1647889752923	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "3541" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofile7FKljF"
+1647889753197	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofile7FKljF\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:3541/devtools/browser/276b45f1-bf6d-490a-bf5d-17c0c3c940e6
+1647889755136	Marionette	INFO	Listening on port 3546
+1647889755644	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1647889761918	Marionette	INFO	Stopped listening on port 3546
+1647889880620	geckodriver	INFO	Listening on 127.0.0.1:3629
+1647889883690	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "3630" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileP4mYa2"
+1647889883974	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileP4mYa2\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:3630/devtools/browser/6d4c871b-f07d-4996-9f2d-0943fa361f46
+1647889885810	Marionette	INFO	Listening on port 3635
+1647889885858	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1647889920048	Marionette	INFO	Stopped listening on port 3635
+1647889920696	geckodriver	INFO	Listening on 127.0.0.1:3693
+1647889923772	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "3694" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileYYMVco"
+1647889924038	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileYYMVco\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:3694/devtools/browser/c36d08a8-f5fc-4541-a7f4-0465fe6683a9
+1647889925932	Marionette	INFO	Listening on port 3699
+1647889926440	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1647889959124	Marionette	INFO	Stopped listening on port 3699
+[Parent 9072, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+1647889959784	geckodriver	INFO	Listening on 127.0.0.1:3762
+1647889962834	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "3763" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofile5uxyNH"
+1647889963098	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofile5uxyNH\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:3763/devtools/browser/1b675de3-0ffd-435f-b777-b95ea2a5815a
+1647889964943	Marionette	INFO	Listening on port 3768
+1647889965013	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1647889970521	Marionette	INFO	Stopped listening on port 3768
+1653139541611	geckodriver	INFO	Listening on 127.0.0.1:5486
+1653139544724	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "5487" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofiledE8TMI"
+1653139545374	Marionette	INFO	Marionette enabled
+WebDriver BiDi listening on ws://localhost:5487
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofiledE8TMI\\search.json.mozlz4", (void 0)))
+1653139547739	Marionette	INFO	Listening on port 5492
+DevTools listening on ws://localhost:5487/devtools/browser/f94f11f3-6eb1-40e3-b277-f9518edde07e
+1653139547951	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1653139581080	Marionette	INFO	Stopped listening on port 5492
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+1653139581578	geckodriver	INFO	Listening on 127.0.0.1:5557
+1653139584671	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "5558" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileN9asKw"
+1653139584953	Marionette	INFO	Marionette enabled
+WebDriver BiDi listening on ws://localhost:5558
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileN9asKw\\search.json.mozlz4", (void 0)))
+1653139586580	Marionette	INFO	Listening on port 5563
+DevTools listening on ws://localhost:5558/devtools/browser/be770f1a-0cca-4e92-b92b-f51b82f4c469
+1653139586738	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1653139594768	Marionette	INFO	Stopped listening on port 5563
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+1653139619712	geckodriver	INFO	Listening on 127.0.0.1:5619
+1653139622771	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "5620" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofile3zeFwI"
+1653139623040	Marionette	INFO	Marionette enabled
+WebDriver BiDi listening on ws://localhost:5620
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofile3zeFwI\\search.json.mozlz4", (void 0)))
+1653139624659	Marionette	INFO	Listening on port 5625
+DevTools listening on ws://localhost:5620/devtools/browser/6cd48505-b967-4bc5-aa04-1648c592ef4c
+1653139624847	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1653139632939	Marionette	INFO	Stopped listening on port 5625
+1653171169362	geckodriver	INFO	Listening on 127.0.0.1:9468
+1653171172449	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "9469" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilefTmNeF"
+1653171172719	Marionette	INFO	Marionette enabled
+WebDriver BiDi listening on ws://localhost:9469
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilefTmNeF\\search.json.mozlz4", (void 0)))
+1653171174318	Marionette	INFO	Listening on port 9475
+DevTools listening on ws://localhost:9469/devtools/browser/75dde284-11f0-46b8-b895-dfe135178eb0
+1653171174510	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1653171207954	Marionette	INFO	Stopped listening on port 9475
+1653171208615	geckodriver	INFO	Listening on 127.0.0.1:9532
+1653171211673	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "9533" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileWynDUE"
+1653171211941	Marionette	INFO	Marionette enabled
+WebDriver BiDi listening on ws://localhost:9533
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileWynDUE\\search.json.mozlz4", (void 0)))
+1653171213512	Marionette	INFO	Listening on port 9538
+DevTools listening on ws://localhost:9533/devtools/browser/5cab7748-9549-4716-8851-65ac79a2ab12
+1653171213779	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://my.bplaced.net"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1653171246909	Marionette	INFO	Stopped listening on port 9538
+[Parent 9028, IPC I/O Parent] WARNING: pipe error: 232: file /builds/worker/checkouts/gecko/ipc/chromium/src/chrome/common/ipc_channel_win.cc:554
+1653171247581	geckodriver	INFO	Listening on 127.0.0.1:9598
+1653171250639	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "9599" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofile5x0ul3"
+1653171250922	Marionette	INFO	Marionette enabled
+WebDriver BiDi listening on ws://localhost:9599
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofile5x0ul3\\search.json.mozlz4", (void 0)))
+1653171252513	Marionette	INFO	Listening on port 9604
+DevTools listening on ws://localhost:9599/devtools/browser/88ac2ce4-eb03-4eef-bf98-064fda333e88
+1653171252756	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
+1653171257836	Marionette	INFO	Stopped listening on port 9604
+
+###!!! [Child][PContentChild] Error: RunMessage(msgname=PHttpChannel::Msg_DeleteSelf) Channel closing: too late to send/recv, messages will be lost
+
