@@ -565,7 +565,7 @@ class NavigationTools(wx.Frame):
         log_msg = ""
 
         try:
-            filename = self.filename + self.extension["txt"]
+            filename = self.filename
             # print("read ", os.path.join(self.pathGPX, filename))
             inputfile = open(os.path.join(self.pathGPX, filename), "r")
             xml = inputfile.read()
@@ -577,7 +577,8 @@ class NavigationTools(wx.Frame):
 
         wps = ""
         soup = BeautifulSoup(xml, "xml")
-        wps = soup.find_all("trkpt")
+        #wps = soup.find_all("trkpt")
+        wps = soup.find_all("wpt")
 
         if wps is None:
             values = "???"
@@ -598,11 +599,12 @@ class NavigationTools(wx.Frame):
             self.rightPanel.SetValue(self.log + "\n\n")
             return
 
-        filename = self.filename + self.extension["gpx"]
+        fname = filename.replace(self.extension['txt'], "")
+        filename = fname + self.extension["gpx"]
         # print(os.path.join(self.pathGPX, filename))
         OutputFile = open(os.path.join(self.pathGPX, filename), "w")
 
-        output = gpx_header.replace("Route Name", self.filename)
+        output = gpx_header.replace("Route Name", fname)
 
         wp_ctr = 1
         for wp in wps:
@@ -613,8 +615,11 @@ class NavigationTools(wx.Frame):
             # print ("time: %s" %wp_time[0])
 
             new_wp = '<rtept lat="%s" lon="%s">\n' % (wp["lat"], wp["lon"])
-            new_wp += "%s\n" % wp_time[0]
-            name = "WP" + str(wp_ctr).zfill(4)
+            if isinstance(wp_time, list) and len(wp_time) > 0:
+                new_wp += "%s\n" % wp_time[0]
+            else:
+                new_wp += "<time>2022-01-01T00:00:00Z</time>\n"
+            name = "ExpWP" + str(wp_ctr).zfill(4)
             new_wp += "<name>" + name + "</name>\n"
             new_wp += "<sym>empty</sym>\n"
 
@@ -643,11 +648,12 @@ class NavigationTools(wx.Frame):
         msg = msg + "\nDone! Converted " + str(wp_ctr - 1) + " waypoints in"
         msg = msg + " from the Expedition route file "
         msg = msg + os.path.join(self.pathGPX,
-                                 self.filename + self.extension["txt"]) + " to a "
+                                 fname + self.extension["txt"]) + " to a "
         msg = (
-            msg + os.path.join(self.pathGPX, self.filename +
+            msg + os.path.join(self.pathGPX, fname +
                                self.extension["gpx"]) + " file.\n\n"
         )
+        self.filename = fname + self.extension["gpx"]
         log_msg = msg + log_msg
         self.log = log_msg + "\n\n" + self.log
         self.rightPanel.SetValue(self.log + "\n\n")
@@ -670,8 +676,8 @@ class NavigationTools(wx.Frame):
             xml = inputfile.read()
             inputfile.close()
         except:
-            print("Error opening file: %s" %
-                  os.path.join(self.pathGPX, filename))
+            print(
+                f"Error opening file: {os.path.join(self.pathGPX, filename)}")
 
         soup = BeautifulSoup(xml, "xml")
         wps = soup.find_all("trkpt")
@@ -890,7 +896,7 @@ class MyDialog(wx.Dialog):
 # Starting point for this program
 # --------------------------------------------------------------------------------------------
 if __name__ == "__main__":
-    print("\nStarting %s" % __app__)
+    print(f"\nStarting {__app__}")
     print(__doc__)
     try:
         # =======================================================================
@@ -906,9 +912,7 @@ if __name__ == "__main__":
             os.chdir(settings["gpxPath"])
         else:
             raise Exception(
-                "Error reading from configuration file ('{}')".format(
-                    settings["error"])
-            )
+                f"Error reading from configuration file ('{settings['error']}')")
     except:
         print("Error opening the configuration file. Terminating program now.")
         sys.exit(1)

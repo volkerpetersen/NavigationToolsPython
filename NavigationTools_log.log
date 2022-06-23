@@ -1,5 +1,40 @@
 
 =================================================
+File Renamer App ended: 2022/06/06 at 08:08:24 
+=================================================
+
+==> Navigation Tools App launched: 2022/06/06 at 08:06:47 
+Using data from the file 'E:\My Documents\Google Drive\Sailing\OpenCPN_Routes\2022_Mackinac_Chicago_Delivery'
+
+--------------------------------------------------------------------------------
+The 'Navigation Tools App' integrates various tools into one GUI environment.
+The tools convert route data between various file formats (gpx, kml, sql, spot).
+In addition the software can upload SQL files to the Toern website and compute
+route statistics.
+
+OpenCPN to MySQL Waypoint legend:
+    Generic WP name options-------> NMxxx, WPxxx, WPTxxx, or 0xxx
+    Diamonds/non-Generic WP name--> regular WP on route
+    Diamonds/Generic WP name------> non-visible WP on route
+    Empty-------------------------> non-visible WP on route
+    Circle------------------------> Harbor
+    Service-Marina----------------> Harbor
+    Anchorage---------------------> Mooring / Anchorage
+
+The program computes the Time, Speed, and Etmals between WPs that
+contain a <desc></desc> tag/field with these entry options:
+    arrival 2019-09-25 19:30    (arrival date/time at this WP)
+    departure 2019-09-26 09:37  (departure date/time from this WP)
+    timedleg 2019-09-26 09:37   (arrival and departure at/from this WP)
+    poi                         (Point of Interest on route not being listed)
+    homeport                    (designates the Waypoint from which a round-trip
+                                 toern originates. Add departure and arrival
+                                 times using the above keywords in add'l lines)
+
+Yellowbrick Google Earth files are available at "yb.tl/racenamexxxx.kml"
+--------------------------------------------------------------------------------
+
+=================================================
 File Renamer App ended: 2022/04/20 at 19:07:56 
 =================================================
 

@@ -28,6 +28,7 @@ try:
     import warnings
     import NavToolsLib as nt
     import sqlite3
+    import ftplib
 
     warnings.filterwarnings("ignore")
 except ImportError as e:
@@ -185,6 +186,9 @@ def upload_to_mysql_via_php(host, query):
 
 
 def uploadMySQLfile(sql_file, verbose=True):
+    FTP_HOST = "kaiserware.bplaced.net"
+    FTP_USER = "kaiserware"
+    FTP_PW = "vesret2204"
     settings = nt.getNavConfig()
 
     if("sqlite_files\\ToernDirectoryTable.sql" in sql_file):
@@ -258,6 +262,22 @@ def uploadMySQLfile(sql_file, verbose=True):
     return ret
 
 
+def FTPupload():
+    FTP_HOST = "kaiserware.bplaced.net"
+    FTP_USER = "kaiserware"
+    FTP_PW = "vesret2204"
+    settings = nt.getNavConfig()
+
+    ftp_server = ftplib.FTP(FTP_HOST, FTP_USER, FTP_PW)
+    ftp_server.cwd("www")
+    fh_sqlite = open(settings["sqliteDB"], 'rb')
+    filename = os.path.basename(settings["sqliteDB"])
+    ret = ftp_server.storbinary('STOR %s' % filename, fh_sqlite)
+    ftp_server.close()
+    
+    return ret
+
+
 # %%
 """
 |------------------------------------------------------------------------------------------
@@ -276,10 +296,12 @@ if __name__ == "__main__":
     #r = upload_to_sqlite(settings['sqlitePath'], "test")
 
     msg = uploadMySQLfile(path)
-
+    
     if not msg:
         print("\nError in uploadMySQLfile()!")
     else:
         print("\nuploadMySQL return:\n%s " % msg)
+
+    FTPupload()
 
     print("\nAll Done!")

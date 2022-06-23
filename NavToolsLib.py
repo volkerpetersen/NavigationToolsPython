@@ -38,7 +38,7 @@ try:
     genericWPs = ['NM', 'WPT', 'WP', '0']
 
 except ImportError as e:
-    print("Import error: %s \nAborting the program %s" % (e, __version__))
+    print(f"Import error: {e} \nAborting the program {__version__}s")
     sys.exit()
 
 
@@ -89,8 +89,8 @@ def saveNavConfig(cwd, route_file):
             fw.write(txt)
 
     except Exception as e1:
-        print("\nTerminating now due to error:\n'%s'\nreading the config file ('%s')." % (
-            str(e1), configFile))
+        print(
+            f"\nTerminating now due to error:\n'{str(e1)}'\nreading the config file ('{configFile}').")
 
 
 def getNavConfig(verbose=False):
@@ -145,17 +145,17 @@ def getNavConfig(verbose=False):
         last_route = rawSettings['lastRoute']
 
         if verbose:
-            print("Configuration file...: '%s'" % configFile)
-            print("Device...............: '%s'" % current_device)
-            print("GPX path.............: '%s'" % gpxPath)
-            print("SQLite path..........: '%s'" % sqlitePath)
-            print("SQLite DB............: '%s'" % sqliteDB)
-            print("Toern Directory Table: '%s'" % toernDirectory)
-            print("Working Dir..........: '%s'" % cwd)
-            print("Last GPX Route file..: '%s'" % last_route)
-            print("Skip WPs.............: '%s'" % rawSettings['skipWP'])
-            print("No Speed.............: '%s'" % rawSettings['noSpeed'])
-            print("Verbose..............: '%s'" % rawSettings['verbose'])
+            print(f"Configuration file...: '{configFile}'")
+            print(f"Device...............: '{current_device}'")
+            print(f"GPX path.............: '{gpxPath}'")
+            print(f"SQLite path..........: '{sqlitePath}'")
+            print(f"SQLite DB............: '{sqliteDB}'")
+            print(f"Toern Directory Table: '{toernDirectory}'")
+            print(f"Working Dir..........: '{cwd}'")
+            print(f"Last GPX Route file..: '{last_route}'")
+            print(f"Skip WPs.............: '{rawSettings['skipWP']}'")
+            print(f"No Speed.............: '{rawSettings['noSpeed']}'")
+            print(f"Verbose..............: '{rawSettings['verbose']}'")
 
         settings['cwd'] = cwd
         settings['gpxPath'] = gpxPath
@@ -169,8 +169,8 @@ def getNavConfig(verbose=False):
         settings['error'] = True
 
     except Exception as e1:
-        print("\nTerminating now due to error:\n'%s'\nreading the config file ('%s')." % (
-            str(e1), configFile))
+        print(
+            f"\nTerminating now due to error:\n'{str(e1)}'\nreading the config file ('{configFile}').")
         settings['error'] = configFile
 
     return settings
@@ -262,13 +262,13 @@ def ComputeRouteDistances(xml, verbose, skipWP, noSpeed):
             if (desc.startswith('departure')):
                 time = desc.replace('departure ', '')
                 leg_start_date = StringToDateTime(time, dateFormats)
-                # print("departure - Leg start: %s at: %s" %(leg_start_date, name))
+                # print(f"departure - Leg start: {leg_start_date} at: {name}")
                 departure_flag = True
 
             if (desc.startswith('arrival')):
                 time = desc.replace('arrival ', '')
                 leg_end_date = StringToDateTime(time, dateFormats)
-                # print("arrival      - Leg start: %s end: %s at: %s" %(leg_start_date, leg_end_date, name))
+                # print(f"arrival      - Leg start: {leg_start_date} end: {leg_end_date} at: {name}")
                 if (departure_flag):
                     leg_timed_flag = True
                     departure_flag = False
@@ -278,7 +278,7 @@ def ComputeRouteDistances(xml, verbose, skipWP, noSpeed):
             if (desc.startswith('timedleg')):
                 time = desc.replace('timedleg ', '')
                 leg_end_date = StringToDateTime(time, dateFormats)
-                # print("timedleg  - Leg start: %s end: %s at: %s" %(leg_start_date, leg_end_date, name))
+                # print(f"timedleg  - Leg start: {leg_start_date} end: {leg_end_date} at: {name}")
                 leg_timed_flag = True
                 departure_flag = True
                 timed_flag = True
@@ -345,13 +345,13 @@ def ComputeRouteDistances(xml, verbose, skipWP, noSpeed):
         msg += (tabulate(rows, headers=["WP Name", "Lat", "Lon", "Distance",
                                         "Time", "Speed", "Etmal"], floatfmt=',.2f', numalign="right"))
 
-    msg += ("\n\nTotal Trip Distance: {:9,.2f}nm".format(total_trip_distance))
+    msg += (f"\n\nTotal Trip Distance: {total_trip_distance:9,.2f}nm")
     if (not noSpeed):
-        msg += ("\nTimed Legs Distance: {:9,.2f}nm".format(sum_legs_distance) +
-                "     (%0.1f%%)" % (sum_legs_distance/total_trip_distance*100.0))
+        msg += (f"\nTimed Legs Distance: {sum_legs_distance:9,.2f}nm")
+        msg += (f"   ({sum_legs_distance/total_trip_distance:.2%})")
     if (sum_legs_time != 0.0 and not noSpeed):
         avg_speed = sum_legs_distance / sum_legs_time
-        msg += ("\nAverage Speed:          {:9,.2f}kts".format(avg_speed))
+        msg += (f"\nAverage Speed:          {avg_speed:9,.2f}kts")
 
     if verbose:
         print(msg)
@@ -367,7 +367,7 @@ def get_decimal_coordinates(info):
     Returns:
         none
     """
-    print("Lat %s" % info)
+    print(f"Lat {info}")
 
 
 def addImagesToRoute(path):
@@ -384,7 +384,7 @@ def addImagesToRoute(path):
     """
 
     points = []
-    print("searching path: '%s'" % path)
+    print(f"searching path: '{path}'")
     for r, d, f in os.walk(path):
         for file in f:
             if file.lower().endswith(('.png', '.jpg', '.jpeg')):
@@ -396,13 +396,13 @@ def addImagesToRoute(path):
                     exif_dict = dict(exif)
                     for key, val in exif_dict.items():
                         if key in ExifTags.TAGS and 'GPSInfo' in ExifTags.TAGS[key]:
-                            print("testing file '%s': %s " % (
-                                file.lower(), repr(val)))
+                            print(
+                                f"testing file '{file.lower()}': {repr(val)} ")
                             latlong = get_decimal_coordinates((repr(val)))
                     if latlong is not None:
                         points.append(latlong)
-                        print("Image %s taken at %.4f / %.4f" %
-                              (f, points[0], points[1]))
+                        print(
+                            f"Image {f} taken at {points[0]:.4f} / {points[0]:.4f}")
                 else:
                     print(exif)
 
@@ -486,7 +486,7 @@ def parseSQLRouteFile(pathGPX, pathSQL, filename):
         xml = inputFile.read()
         inputFile.close()
     except:
-        print("Error opening file: %s" % fn1)
+        print(f"Error opening file: {fn1}")
         return False
 
     soup = BeautifulSoup(xml)
@@ -496,8 +496,8 @@ def parseSQLRouteFile(pathGPX, pathSQL, filename):
     filename2 = filename+".sql"
     fn2 = os.path.join(pathSQL, filename2)
 
-    # print("gpx file: %s \ngpx path: %s" %(filename1, fn1))
-    # print("sql file: %s \nsql path: %s" %(filename2, fn2))
+    # print(f"gpx file: {filename1} \ngpx path: {fn1}")
+    # print(f"sql file: {filename2} \nsql path: {fn2}")
 
     outputFile = open(fn2, "w")
 
@@ -520,7 +520,10 @@ def parseSQLRouteFile(pathGPX, pathSQL, filename):
         # print "|----end of wp content!"
 
         name = wp.find('name').text
-        symbol = (wp.find('sym').text).lower()
+        if wp.find('sym') is None:
+            symbol = "empty"
+        else:
+            symbol = (wp.find('sym').text).lower()
         if (wp.find('desc')):
             notes = "'"+(wp.find('desc').text)+"'"
             desc = (wp.find('desc').text).lower()
@@ -553,13 +556,11 @@ def parseSQLRouteFile(pathGPX, pathSQL, filename):
             distance = calc_distance(old_lat, old_lon, float(lat), float(lon))
             cum_dist = cum_dist + distance
             total = total + distance
-            # print("WP"+str(ctr)+" of 'symbol':"+symbol+" after "+str(distance)+"nm")
             if lat == first_lat and lon == first_lon:
                 route = 'harbor'
                 txt = txt + \
                     "WP%d: arrived after final leg at '%s' %s after %0.2fnm.\n" % (
                         ctr, route, name, cum_dist)
-                # print("WP%d: arrived after final leg at '%s' %s after %0.2fnm." %(ctr, route, name, cum_dist))
             else:
                 if 'anchorage' in symbol:
                     route = 'mooring'
@@ -586,25 +587,24 @@ def parseSQLRouteFile(pathGPX, pathSQL, filename):
             output += "(" + str(ctr)+", '" + old_name + "', '" + name + \
                 "', " + "'" + str(lat) + "', '" + str(lon) + "', '"
             output += route + "', '', " + notes + "),\n"
-        # print("from", old_name, "to", name)
+        # print(f"from: {old_name}  to: {name}")
         old_name = name
         rows.append([ctr, name, lat, lon, route])
         old_lat = float(lat)
         old_lon = float(lon)
         ctr += 1
-    # print ("Total trip across %d waypoints: %0.2fnm." %(ctr, total))
-    txt = txt + ("Total trip across %d waypoints: %0.2fnm." % (ctr, total))
+    # print (f"Total trip across {ctr} waypoints: {total:0.2f}nm.")
+    txt = txt + (f"Total trip across {ctr} waypoints: {total:,.2f}nm.")
     output = output[:-2] + ";"
     outputFile.write(output)
     outputFile.close()
     # print(tabulate(rows, headers=["WP #", "Name", "Latitude", "Longitude", "Route"], floatfmt=',.4f', numalign="right"))
 
-    msg = "\n==> " + \
-        today.strftime("%Y-%m-%d        %H:%M:%S ") + " Route Parsing Function"
-    msg = msg + ("\nDone, parsed a total of %d waypoints ") % ctr
-    msg = msg + \
-        ("from the OpenCPN route file %s saved to %s\n\n") % (pathGPX, pathSQL)
-    msg = msg + txt + "\n\n"
+    msg = (f"\n==> {today.strftime('%Y-%m-%d        %H:%M:%S')}"
+           f"\nRoute Parsing Function"
+           f"\nDone, parsed a total of {ctr} waypoints "
+           f"from the OpenCPN route file:\n'{pathGPX}'\nsaved to:\n'{pathSQL}'\n\n")
+    msg += txt + "\n\n"
     log_msg = msg + log_msg
     return log_msg
 
@@ -664,7 +664,7 @@ def parseKMLRouteFile(pathGPX, filename, boatname):
         xml = inputFile.read()
         inputFile.close()
     except:
-        print("Error opening file: %s" % pathKML)
+        print(f"Error opening file: {pathKML}")
         return False
     pathGPX = os.path.join(pathGPX, filename+".gpx")
     outputfile = open(pathGPX, "w")
@@ -673,12 +673,12 @@ def parseKMLRouteFile(pathGPX, filename, boatname):
     locations = []
     times = []
     if len(records):
-        # print("\nfound %i boat names" % len(records))
+        # print(f"\nfound {len(records)} boat names")
         ctr = 0
         for record in records:
             boat = record.find_all("ns2:name")
             if boatname.lower() in boat[0].contents[0].lower():
-                # print("\n\nfound our boat: %s\n" % boat[0].contents[0])
+                # print(f"\n\nfound our boat: {boat[0].contents[0]}\n")
                 #siblings = list(record.next_siblings)
                 # print(len(siblings))
                 times = record.find_all("ns2:when")
@@ -689,12 +689,12 @@ def parseKMLRouteFile(pathGPX, filename, boatname):
         if len(locations) != 0 and len(locations) == len(times):
 
             # build the GPX route file
-            rndDigits = "{:12x}".format(random.randint(0, 0xFFFFFFFFFFFF))
+            rndDigits = (f"{random.randint(0, 0xFFFFFFFFFFFF):12x}")
             gpx = gpxRoute
             gpx = gpx.replace("nameX", filename)
             gpx = gpx.replace("RANDOM", rndDigits)
             for ctr in range(0, len(locations)):
-                rndDigits = "{:12x}".format(random.randint(0, 0xFFFFFFFFFFFF))
+                rndDigits = (f"{random.randint(0, 0xFFFFFFFFFFFF):12x}")
                 wp = gpxRouteWP
                 wp = wp.replace("RANDOM", rndDigits)
                 latlon = locations[ctr].contents[0].split(",")
@@ -707,14 +707,16 @@ def parseKMLRouteFile(pathGPX, filename, boatname):
             gpx += gpxRouteEnd
             outputfile.write(gpx)
 
-            log_msg += ("Done, parsed a total of %d waypoints for boat '%s' ") % (ctr, boatname)
-            log_msg += ("from the KML route file %s to the OpenCPN route file %s\n") % (
-                pathKML, pathGPX)
+            log_msg += (
+                f"Done, parsed a total of {ctr} waypoints for boat '{boatname}' ")
+            log_msg += (
+                f"from the KML route file {pathKML} to the OpenCPN route file{pathGPX}\n")
         else:
-            log_msg += "Found inconsistent number of or no location (%i) and date (%i) records. Couldn't parse the KML route info for boat '%s'.\n" % (
-                len(locations), len(times), boatname)
+            log_msg += (
+                f"Found inconsistent number of or no location ({len(locations)}) and date ({len(times)}) records. Couldn't parse the KML route info for boat '{boatname}'.\n")
     else:
-        log_msg += "Found no route information in the KML file ('%s').\n" % pathKML
+        log_msg += (
+            f"Found no route information in the KML file ('{pathKML}').\n")
 
     outputfile.close()
 
@@ -725,15 +727,10 @@ if __name__ == "__main__":
     """-------------------------------------------------------------------------
         Script starting point
     """
-    print("\nStarting %s" % __app__)
+    print(f"\nStarting {__app__}")
     print(__doc__)
 
     settings = getNavConfig(verbose=True)
-    log_msg = parseKMLRouteFile(
-        settings['gpxPath'],
-        '2019_TransSuperior_Race',
-        'ZigZag')
-    print(log_msg)
 
 # dictionary with keys:
 # {cwd, gpxPath, sqlitePath, lastGPX, lastRoute, skipWP, noSpeed, verbose, error}
