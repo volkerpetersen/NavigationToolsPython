@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #from __future__ import unicode_literals
-#--------------------------------------------------------------------------------------------
-__author__    = "Volker Petersen <volker.petersen01@gmail.com>"
-__app__       = "RouteAnalyzer.py"
-__version__   = "version 2.3.0, Python 3.7"
-__date__      = "Date: 2016/06/15"
+# --------------------------------------------------------------------------------------------
+__author__ = "Volker Petersen <volker.petersen01@gmail.com>"
+__app__ = "RouteAnalyzer.py"
+__version__ = "version 2.3.0, Python 3.7"
+__date__ = "Date: 2016/06/15"
 __copyright__ = "Copyright (c) 2016 Volker Petersen"
-__license__   = "GNU General Public License, published by the Free Software Foundation"
+__license__ = "GNU General Public License, published by the Free Software Foundation"
 __doc__ = """
 -------------------------------------------------------------------------------
    Program parameters:
@@ -33,34 +33,40 @@ __doc__ = """
                                   times using the above keywords in add'l lines)
 -------------------------------------------------------------------------------
 """
+navtools = None
 
 try:
     import sys
     import os
-    import NavToolsLib as nt
+    from NavToolsLib import NavTools
 
 except ImportError as e:
-    print("Import error: %s\nAborting the program %s" % (str(e), __version__))
+    print(f"Import error: {str(e)}\nAborting the program {__version__}")
     sys.exit()
 
 
 def processRoute(name, route, verbose, skipWPsFlag, noSpeed):
     tmp = " Route '" + name + "' Summary "
-    print("\n\t%s" % tmp)
-    print("\t" + "=" * len(tmp) + "\n")
-    nt.ComputeRouteDistances(route.encode("latin-1"), verbose, skipWPsFlag, noSpeed)
-    return True
+    print(f"\n\t{tmp}")
+    print(f"\t" + "=" * len(tmp) + "\n")
+    msg = navtools.ComputeRouteDistances(route.encode("latin-1"),
+                                         verbose, skipWPsFlag, noSpeed)
+    print(msg)
+
 
 """
 |------------------------------------------------------------------------------------------
-| main
+| program launch point
 |------------------------------------------------------------------------------------------
 """
-def main():
+if __name__ == "__main__":
+    print("\nStarting %s" % __app__)
+    print(__doc__)
+
     #
     # fetch the supplied program parameters
     #
-    verbose = ""
+    verbose = False
     skipWPsFlag = ""
     routeName = ""
     fileName = ""
@@ -84,28 +90,29 @@ def main():
             skipWPsFlag = True
 
     try:
-        #=======================================================================
+        # =======================================================================
         # get the device configuration data. This function is utilized by these scripts
         #    RouteConvertUpload.py
         #    OpenCPN_Route_Analyzer.py
         #    Navigation_Route_Analyzer.pyw
         # returns a dictionary with these keys:
         # {cwd, gpxPath, sqlPath, lastGPX, lastRoute, skipWP, noSpeed, verbose, error}
-        #=======================================================================
-        settings = nt.getNavConfig(verbose=False)
+        # =======================================================================
+        navtools = NavTools()
+        settings = navtools.getConfig(verbose=False)
         if (settings['error'] is True):
             cwd = settings['cwd']
             gpxPath = settings['gpxPath']
-            sqlPath = settings['sqlPath']
+            sqlPath = settings['sqlitePath']
             lastRoute = settings['lastRoute']
             skipWPTxt = settings['skipWP']
             noSpeedTxt = settings['noSpeed']
             verboseTxt = settings['verbose']
         else:
-            raise Exception("Error reading from configuration file ('{}')".format(settings['error'])) 
+            raise Exception(
+                "Error reading from configuration file ('{}')".format(settings['error']))
 
     except Exception as e:
-        openCPNroutes = os.getcwd()
         lastRoute = "None"
         verboseTxt = ""
         skipWPTxt = ""
@@ -124,36 +131,21 @@ def main():
     if (noSpeed is not False):
         noSpeed = (noSpeedTxt == "True")
 
-    print("OpenCPN routes.: '%s'" %gpxPath)
-    print("Route..........: '%s'" %lastRoute)
-    print("skip WPs.......: %s" %skipWPsFlag)
-    print("compute speed..: %s" %(not noSpeed))
+    print(f"OpenCPN routes.: '{gpxPath}'")
+    print(f"Route..........: '{lastRoute}'")
+    print(f"skip WPs.......: {skipWPsFlag}")
+    print(f"compute speed..: {(not noSpeed)}")
 
     try:
-        routeFlag = False
         path = os.path.join(gpxPath, lastRoute+".gpx")
-        try:
-            inputfile = open(path, "r")
-            route = inputfile.read()
-            inputfile.close()
-            routeFlag = processRoute(routeName, route, verbose, skipWPsFlag, noSpeed)
-        except:
-            print("\nThe Route '%s.gpx' is not found in the archived OpenCPN routes files." % routeName)
-    
-        if (not routeFlag):
-            print("\nTerminating program since the route file couldn't be found anywhere.")
-    
-        print("\nProgram is done.")
-    except Exception as e:
-        print("\nProgram ended with error: %s\n" % str(e))
+        inputfile = open(path, "r")
+        route = inputfile.read()
+        inputfile.close()
+    except:
+        print(
+            f"\nThe Route '{routeName}.gpx' is not found in the archived OpenCPN routes files.")
 
+    processRoute(
+        routeName, route, verbose, skipWPsFlag, noSpeed)
 
-"""
-|------------------------------------------------------------------------------------------
-| program launch point
-|------------------------------------------------------------------------------------------
-"""
-if __name__ == "__main__":
-    print("\nStarting %s" % __app__)
-    print(__doc__)
-    main()
+    print("\nProgram is done.")

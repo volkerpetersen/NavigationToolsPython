@@ -12,11 +12,12 @@ __doc__ = """
   Navigation Tools package test functions
 -----------------------------------------------------------------------------
 """
+navtools = None
 try:
     import sys
     import os
     from typing import Dict
-    import NavToolsLib as nt
+    from NavToolsLib import NavTools
 
 except ImportError as e:
     print("Import error: %s \nAborting the program %s" % (e, __version__))
@@ -39,29 +40,37 @@ def fetch_file(file):
     return xml
 
 
+def test_library_import():
+    global navtools
+    navtools = NavTools()
+
+
 def test_settings():
-    settings = nt.getNavConfig(verbose=False)
+    settings = navtools.getConfig(verbose=False)
     assert (isinstance(settings, Dict) and len(settings) > 0)
 
 
 def test_readGPX(file=DEFAULT):
-    settings = nt.getNavConfig(verbose=False)
+    settings = navtools.getConfig(verbose=False)
     file = os.path.join(settings["gpxPath"], file)
     xml = fetch_file(file)
     assert (len(xml) > 0)
 
 
 def test_wpDistance():
-    assert(float_equality(nt.calc_distance(
-        45.0, -91.0, 45.166666667, -91.0), 10.0179471))
+    assert(float_equality(navtools.calc_distance(
+        45.0, -91.0, 46.0, -91.0), 60.10862))
+    # equator distances
+    assert(float_equality(navtools.calc_distance(
+        0.0, -91.0, 0.0, -92.0), 60.10862))
 
 
 def test_routeDistances(file=DEFAULT):
-    settings = nt.getNavConfig(verbose=False)
+    settings = navtools.getConfig(verbose=False)
     file = os.path.join(settings["gpxPath"], file)
     xml = fetch_file(file)
 
-    msg = nt.ComputeRouteDistances(
+    msg = navtools.ComputeRouteDistances(
         xml, verbose=False, skipWP=True, noSpeed=False)
     assert (("6.12kts" in msg) and ("301.28nm" in msg))
 

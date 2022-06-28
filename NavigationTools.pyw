@@ -9,7 +9,7 @@ __copyright__ = "Copyright (c) 2011 Volker Petersen"
 __license__ = "GNU General Public License, published by the Free Software Foundation"
 __doc__ = """
 --------------------------------------------------------------------------------
-The 'Navigation Tools App' integrates various tools into one GUI environment.
+The 'Navigation Tools App' integrates various tools in one GUI.
 The tools convert route data between various file formats (gpx, kml, sql, spot).
 In addition the software can upload SQL files to the Toern website and compute
 route statistics.
@@ -24,7 +24,7 @@ OpenCPN to MySQL Waypoint legend:
     Anchorage---------------------> Mooring / Anchorage
 
 The program computes the Time, Speed, and Etmals between WPs that
-contain a <desc></desc> tag/field with these entry options:
+contain a <desc></desc> tag with these entry options:
     arrival 2019-09-25 19:30    (arrival date/time at this WP)
     departure 2019-09-26 09:37  (departure date/time from this WP)
     timedleg 2019-09-26 09:37   (arrival and departure at/from this WP)
@@ -40,16 +40,14 @@ try:
     import sys
     import wx
     import wx.adv
-    import time
     import os
-    import threading
     from bs4 import BeautifulSoup
     from tabulate import tabulate
     from datetime import datetime
     from uploadMySQL import uploadMySQLfile
-    import NavToolsLib as nt
+    from NavToolsLib import NavTools
 except ImportError as e:
-    print("Import error: %s\nAborting the program %s" % (str(e), __app__))
+    print(f"Import error: {str(e)}\nAborting the program {__app__}")
     sys.exit()
 
 # --------------------------------------------------------------------------------------------
@@ -60,9 +58,10 @@ except ImportError as e:
 class NavigationTools(wx.Frame):
     """  main Class for the Navigation Tools - builds the GUI"""
 
-    def __init__(self, settings):
+    def __init__(self, settings, navTools):
         today = datetime.now()
         self.settings = settings
+        self.navTools = navTools
         self.cwd = settings["cwd"]
         self.pathGPX = settings["gpxPath"]
         self.pathSQLite = settings["sqlitePath"]
@@ -74,14 +73,11 @@ class NavigationTools(wx.Frame):
         self.extension["txt"] = ".txt"
         self.extension["spot"] = ".spot"
         self.log = (
-            "==> " + __app__ + " launched: " +
-            today.strftime("%Y/%m/%d at %H:%M:%S ")
+            f"==> {__app__} launched: "
+            f"{today.strftime('%Y/%m/%d at %H:%M:%S')}"
         )
-        self.log = self.log + "\nUsing data from the file '%s\%s'" % (
-            self.pathGPX,
-            self.filename,
-        )
-        self.log = self.log + "\n" + __doc__
+        self.log += f"\nUsing data from the file '{self.pathGPX}\{self.filename}'"
+        self.log += f"\n{__doc__}"
         self.font = wx.Font(11, wx.MODERN, wx.NORMAL,
                             wx.NORMAL, False, u"Consolas")
 
@@ -106,7 +102,7 @@ class NavigationTools(wx.Frame):
 
         self.statusBar = self.CreateStatusBar()
         self.statusBar.SetStatusText(
-            "GPX Route: '%s'    at: '%s'" % (self.filename, self.pathGPX)
+            f"GPX Route: '{self.filename}'    at: '{self.pathGPX}'"
         )
 
         leftWidth = 170
@@ -335,9 +331,9 @@ class NavigationTools(wx.Frame):
             xml = inputfile.read()
             inputfile.close()
         except:
-            print("Error opening file: %s" % file)
+            print(f"Error opening file: '{file}'")
 
-        msg = nt.ComputeRouteDistances(
+        msg = self.navTools.ComputeRouteDistances(
             xml, verbose=False, skipWP=True, noSpeed=False)
         # wx.MessageBox(msg, "Route Analysis Results", wx.OK | wx.ICON_NONE)
         msg = "==> Evaluated route %s\n\n" % self.filename + msg
@@ -354,7 +350,7 @@ class NavigationTools(wx.Frame):
         filters = "OpenCPN route files (*.gpx)|*.gpx|MySQL route file (*.sql)|*.sql|All files (*.*)|*.*"
         dlg = wx.FileDialog(
             self,
-            "Choose a OpenCPN .gpx route file:",
+            "Choose an OpenCPN .gpx route file:",
             wildcard=filters,
             style=wx.FD_OPEN,
         )
@@ -365,12 +361,12 @@ class NavigationTools(wx.Frame):
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             if os.path.isfile(path):
-                self.filename = os.path.basename(
-                    path).replace(self.extension["gpx"], "")
+                filename = os.path.basename(path).split('.')
+                self.filename = filename[0]
+                extension = filename[1].upper()
                 self.pathGPX = os.path.splitext(os.path.dirname(path))[0]
                 self.statusBar.SetStatusText(
-                    "GPX Route: '%s'    at: '%s'" % (
-                        self.filename, self.pathGPX)
+                    f"{extension} Route: '{self.filename}'    at: '{self.pathGPX}'"
                 )
                 self.log = (
                     "==> Set route file to: "
@@ -378,9 +374,13 @@ class NavigationTools(wx.Frame):
                     + "\n\n"
                     + self.log
                 )
-                nt.saveNavConfig(self.cwd, self.filename)
+                self.navTools.saveConfig(self.cwd, self.filename)
+                if extension == 'GPX':
+                    msg = self.navTools.verifyGPXRouteFile(
+                        self.pathGPX, self.filename+".gpx")
+                    self.log = msg + self.log
             else:
-                msg = "==> File '%s' not found. Couldn't update Route file.\n\n" % path
+                msg = f"==> File '{path}' not found. Couldn't update Route file.\n\n"
                 self.log = msg + self.log
             self.rightPanel.SetValue(self.log + "\n\n")
 
@@ -395,8 +395,8 @@ class NavigationTools(wx.Frame):
         """ parse a GPX route file into a MySQL route file """
 
         self.log = (
-            nt.parseSQLRouteFile(self.pathGPX, self.pathSQLite,
-                                 self.filename) + self.log
+            self.navTools.parseSQLRouteFile(self.pathGPX, self.pathSQLite,
+                                            self.filename) + self.log
         )
         self.rightPanel.SetValue(self.log + "\n\n")
 
@@ -456,7 +456,8 @@ class NavigationTools(wx.Frame):
 
         filename = self.filename + self.extension["gpx"]
         # print(os.path.join(self.pathGPX, filename2))
-        OutputFile = open(os.path.join(self.pathGPX, filename), "w")
+        OutputFile = open(os.path.join(
+            self.settings['sqlitePath'], filename), "w")
 
         output = gpx_header.replace("Route Name", self.filename)
 
@@ -533,7 +534,8 @@ class NavigationTools(wx.Frame):
         dlg = MyDialog(self, "Crunching data, please wait...")
         dlg.Show()
 
-        msg += nt.parseKMLRouteFile(self.pathGPX, filename, boatname)
+        msg += self.navTools.parseKMLRouteFile(
+            self.pathGPX, filename, boatname)
 
         dlg.Destroy()
 
@@ -571,8 +573,8 @@ class NavigationTools(wx.Frame):
             xml = inputfile.read()
             inputfile.close()
         except:
-            print("Error opening file: %s" %
-                  os.path.join(self.pathGPX, filename))
+            print(
+                f"Error opening file: {os.path.join(self.pathGPX, filename)}")
             return
 
         wps = ""
@@ -587,13 +589,12 @@ class NavigationTools(wx.Frame):
                 + today.strftime("%Y-%m-%d	 %H:%M:%S ")
                 + " Expedition Route Parsing Function"
             )
-            msg = (
-                msg
-                + "\nDidn't find any waypoints in Expedition gpx file - missing '"
-                + values
-                + "' string."
+            msg += (
+                f"\nDidn't find any waypoints in Expedition gpx file"
+                f" - missing '{values}' string."
+                f" in the Expedition route file {self.pathGPX} \n\n"
             )
-            msg = msg + " in the Expedition route file " + self.pathGPX + "\n\n"
+
             log_msg = msg + log_msg
             self.log = log_msg + "\n\n" + self.log
             self.rightPanel.SetValue(self.log + "\n\n")
@@ -614,20 +615,16 @@ class NavigationTools(wx.Frame):
             # print ("lon: %s" %wp['lon'])
             # print ("time: %s" %wp_time[0])
 
-            new_wp = '<rtept lat="%s" lon="%s">\n' % (wp["lat"], wp["lon"])
+            new_wp = f"<rtept lat='{wp['lat']}' lon='{wp['lon']}'>\n"
             if isinstance(wp_time, list) and len(wp_time) > 0:
-                new_wp += "%s\n" % wp_time[0]
+                new_wp += f"{wp_time[0]}\n"
             else:
-                new_wp += "<time>2022-01-01T00:00:00Z</time>\n"
-            name = "ExpWP" + str(wp_ctr).zfill(4)
-            new_wp += "<name>" + name + "</name>\n"
-            new_wp += "<sym>empty</sym>\n"
-
-            new_wp += "<type>WPT</type>\n"
-            new_wp += (
-                "<extensions><opencpn:guid>717ab0000-eb25-48bc-930a-%012d" % wp_ctr
-            )
-            new_wp += "</opencpn:guid>\n<opencpn:viz>0</opencpn:viz>\n<opencpn:viz_name>0</opencpn:viz_name>\n</extensions>\n</rtept>\n"
+                new_wp += f"<time>2022-01-01T00:00:00Z</time>\n"
+            new_wp += f"<name>ExpWP{str(wp_ctr).zfill(4)}</name>\n"
+            new_wp += f"<sym>empty</sym>\n"
+            new_wp += f"<type>WPT</type>\n<extensions>"
+            new_wp += f"<opencpn:guid>717ab0000-eb25-48bc-930a-{wp_ctr:012d}"
+            new_wp += f"</opencpn:guid>\n<opencpn:viz>0</opencpn:viz>\n<opencpn:viz_name>0</opencpn:viz_name>\n</extensions>\n</rtept>\n"
 
             output += new_wp
             # print("WP %i\n%s" %(wp_ctr,new_wp))
@@ -641,18 +638,15 @@ class NavigationTools(wx.Frame):
         OutputFile.close()
 
         msg = (
-            "==> "
-            + today.strftime("%Y-%m-%d	 %H:%M:%S ")
-            + " Expedition Route Parsing Function"
+            f"==> {today.strftime('%Y-%m-%d %H:%M:%S}')}"
+            f" Expedition Route Parsing Function"
+            f"\nDone! Converted {(wp_ctr - 1)} waypoints"
+            f" from the Expedition route file format"
+            f"'{os.path.join(self.pathGPX, fname+self.extension['txt'])}'"
+            f" to the GPX file format "
+            f"'{os.path.join(self.pathGPX, fname+self.extension['gpx'])}'\n\n"
         )
-        msg = msg + "\nDone! Converted " + str(wp_ctr - 1) + " waypoints in"
-        msg = msg + " from the Expedition route file "
-        msg = msg + os.path.join(self.pathGPX,
-                                 fname + self.extension["txt"]) + " to a "
-        msg = (
-            msg + os.path.join(self.pathGPX, fname +
-                               self.extension["gpx"]) + " file.\n\n"
-        )
+
         self.filename = fname + self.extension["gpx"]
         log_msg = msg + log_msg
         self.log = log_msg + "\n\n" + self.log
@@ -686,7 +680,7 @@ class NavigationTools(wx.Frame):
         path2 = os.path.join(self.pathSQLite, filename)
         OutputFile = open(path2, "w")
 
-        output = nt.sql_header.replace("Table_Name", self.filename)
+        output = self.navTools.sql_header.replace("Table_Name", self.filename)
 
         ctr = 0
         wp_ctr = 1
@@ -700,18 +694,8 @@ class NavigationTools(wx.Frame):
             lon = wp["lon"]
             if ctr == 0:
                 output += (
-                    "("
-                    + str(ctr)
-                    + ", '"
-                    + name
-                    + "', '"
-                    + name
-                    + "', "
-                    + "'"
-                    + str(lat)
-                    + "', '"
-                    + str(lon)
-                    + "', 'harbor', ''),\n"
+                    f"({ctr}, '{name}', '{name}', '{lat}', '{lon}'"
+                    f", 'harbor', ''),\n"
                 )
                 route = "harbor"
                 first_lat = lat
@@ -731,20 +715,8 @@ class NavigationTools(wx.Frame):
                 else:
                     route = "route"
                 output += (
-                    "("
-                    + str(ctr)
-                    + ", '"
-                    + old_name
-                    + "', '"
-                    + name
-                    + "', "
-                    + "'"
-                    + str(lat)
-                    + "', '"
-                    + str(lon)
-                    + "', '"
-                    + route
-                    + "', '', ''),\n"
+                    f"({ctr}, '{old_name}', '{name}', '{lat}', '{lon}'"
+                    f"', '{route}', '', ''),\n"
                 )
                 old_name = name
             rows.append([name, time, lat, lon, route])
@@ -762,10 +734,10 @@ class NavigationTools(wx.Frame):
             )
         )
 
-        msg = "==> " + \
-            today.strftime("%Y-%m-%d  %H:%M:%S ") + " Route Parsing Function"
-        msg = msg + "\nDone, parsed a total of " + str(ctr) + " waypoints"
-        msg = msg + " from the SPOT route file " + self.pathGPX + "\n\n"
+        msg = (f"==> {today.strftime('%Y-%m-%d  %H:%M:%S')}"
+               f" Route Parsing Function"
+               f"\nDone, parsed a total of {ctr} waypoints"
+               f" from the SPOT route file '{self.pathGPX}'\n\n")
         log_msg = msg + log_msg
         self.log = log_msg + "\n\n" + self.log
         self.rightPanel.SetValue(self.log + "\n\n")
@@ -794,7 +766,7 @@ class NavigationTools(wx.Frame):
         filename = self.filename + self.extension["sql"]
         msg2 = uploadMySQLfile(os.path.join(self.pathSQLite, filename), False)
         if not msg2:
-            msg2 = "\nError in uploadMySQL('%s')!\n" % filename
+            msg2 = f"\nError in uploadMySQL('{filename}')!\n"
             # print (msg2)
         else:
             msg2 = msg2["Insert"]["msg"]
@@ -802,12 +774,10 @@ class NavigationTools(wx.Frame):
 
         today = datetime.now()
         msg = (
-            "==> "
-            + today.strftime("%Y-%m-%d  %H:%M:%S ")
-            + " upload MySQL file to Website."
-        )
-        msg = msg + ("\nResults for ToernDirectoryTable.sql: %s") % msg1
-        msg = msg + ("\nResults for %s: %s \n\n") % (filename, msg2)
+            f"==> today.strftime('%Y-%m-%d  %H:%M:%S')"
+            f" upload MySQL file to Website."
+            f"\nResults for ToernDirectoryTable.sql: {msg1}"
+            f"\nResults for {filename}: {msg2} \n\n")
 
         if isinstance(dlg, wx.ProgressDialog):
             dlg.Destroy()
@@ -866,7 +836,7 @@ class NavigationTools(wx.Frame):
         info = wx.adv.AboutDialogInfo()
         info.SetName(__app__)
         info.SetVersion(__version__)
-        info.SetCopyright("(C) 2011-%s Volker Petersen" % year)
+        info.SetCopyright(f"(C) 2011-{year} Volker Petersen")
         info.SetDescription(__doc__)
         info.SetWebSite(
             "http://kaiserware.bplaced.net", "Volker Petersen's Sailing Trips"
@@ -907,7 +877,8 @@ if __name__ == "__main__":
         # returns a dictionary with these keys:
         # {cwd, gpxPath, sqlitePath, LastRoute, skipWP, noSpeed, verbose, error}
         # =======================================================================
-        settings = nt.getNavConfig(verbose=True)
+        navtools = NavTools()
+        settings = navtools.getConfig(verbose=True)
         if settings["error"] is True:
             os.chdir(settings["gpxPath"])
         else:
@@ -919,5 +890,5 @@ if __name__ == "__main__":
 
     # launch the WX app
     app = wx.App(redirect=True)
-    frame = NavigationTools(settings)
+    frame = NavigationTools(settings, navtools)
     app.MainLoop()

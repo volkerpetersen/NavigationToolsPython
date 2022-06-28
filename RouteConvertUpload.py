@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # -- coding: utf-8 --
 # from __future__ import unicode_literals
@@ -26,6 +27,7 @@ __doc__ = """
 
 -------------------------------------------------------------------------------
 """
+navtools = None
 
 try:
     import sys
@@ -33,7 +35,7 @@ try:
     from datetime import datetime, timedelta
     from shutil import copyfile
     from bs4 import BeautifulSoup
-    import NavToolsLib as nt
+    from NavToolsLib import NavTools
     from uploadMySQL import uploadMySQLfile, upload_to_mysql_via_php, upload_to_mysql
 
 except ImportError as e:
@@ -104,7 +106,7 @@ def fixRouteDates(fileName, pathSQL, maptable, fixStartDate=True, verbose=False)
 
         if isinstance(legStart, datetime):
             if lastLAT != 0:
-                distance = nt.calc_distance(lastLAT, lastLON, lat, lon)
+                distance = navtools.calc_distance(lastLAT, lastLON, lat, lon)
             else:
                 distance = 0
             elapsedTime = distance / speed		# time in hrs
@@ -241,7 +243,8 @@ if __name__ == "__main__":
         # returns a dictionary with these keys:
         # {cwd, gpxPath, sqlPath, lastGPX, lastRoute, skipWP, noSpeed, verbose, error}
         # =======================================================================
-        settings = nt.getNavConfig(verbose=False)
+        navtools = NavTools()
+        settings = navtools.getConfig(verbose=False)
         if (settings['error'] is True):
             cwd = settings['cwd']
             pathGPX = settings['gpxPath']
@@ -289,7 +292,7 @@ if __name__ == "__main__":
         print("New Route......: '%s'" % lastRoute)
         c = input("Do you want to update the Config file ('y' / 'n' or <Enter>)? ")
         if (c == 'y' or c == 'Y'):
-            nt.saveNavConfig(lastRoute)
+            navtools.saveConfig(lastRoute)
 
     try:
         flag = True
@@ -302,7 +305,8 @@ if __name__ == "__main__":
                 flag = False
 
         if (flag):
-            log = nt.parseSQLRouteFile(pathGPX, pathSQL, lastRoute+'.gpx')
+            log = navtools.parseSQLRouteFile(
+                pathGPX, pathSQL, lastRoute+'.gpx')
         else:
             log = "==> Skipped parsing the route '%s'" % lastRoute
         # end of if-statement

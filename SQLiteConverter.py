@@ -12,10 +12,11 @@ __license__ = "Python 3.8.5 | GPL http://www.gnu.org/licenses/gpl.txt"
 __doc__ = """
 script to convert MySQL query files to SQLite queries
 """
+navtools = None
 try:
     import os
     import sys
-    import NavToolsLib as nt
+    from NavToolsLib import NavTools
 except ImportError as e:
     print("Import error: '%s' - %s\nAborting the program" %
           (str(e), __version__))
@@ -35,6 +36,7 @@ lat = "`lat` text,"
 lon = "`lon` text,"
 end = """`notes` VARCHAR(80) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;"""
+
 
 def convert_sql_query(inputFile, outputFile):
     if "_Backup" in inputFile:
@@ -56,14 +58,15 @@ def convert_sql_query(inputFile, outputFile):
         query = query.replace(lon, text)
         text = '"notes" TEXT, PRIMARY KEY("id"));'
         query = query.replace(end, text)
-        query = query.replace("`", '"');
-        query = query.replace("text", 'TEXT');
-        query = query.replace("TRUNCATE", 'DELETE FROM');
+        query = query.replace("`", '"')
+        query = query.replace("text", 'TEXT')
+        query = query.replace("TRUNCATE", 'DELETE FROM')
 
         with open(outputFile, 'w') as file:
             file.write(query)
 
     return
+
 
 if __name__ == "__main__":
     """---------------------------------------------------------------------
@@ -74,13 +77,14 @@ if __name__ == "__main__":
 
     print("\nStarting %s\n%s" % (__version__, __doc__))
 
-    settings = nt.getNavConfig()
+    navtools = NavTools()
+    settings = navtools.getConfig()
     sqlPath = settings['sqlPath']
     sqlitePath = settings['sqlitePath']
 
-    print("\nSQL path:....'%s'" %sqlPath)
-    print("\nSQLite path:.'%s'" %sqlitePath)
-    print("\nSQLite DB:...'%s'" %settings['sqliteDB'])
+    print("\nSQL path:....'%s'" % sqlPath)
+    print("\nSQLite path:.'%s'" % sqlitePath)
+    print("\nSQLite DB:...'%s'" % settings['sqliteDB'])
 
     for file in os.listdir(sqlPath):
         if file.endswith(".sql"):

@@ -16,6 +16,7 @@ __license__ = "GNU General Public License, published by the Free Software Founda
 __version__ = "version 1.5, Python 3.7"
 __app__ = "uploadMySQL.py"
 
+navtools = None
 try:
     # import python system modules
     import os
@@ -26,9 +27,9 @@ try:
     import urllib.error
     import urllib.parse
     import warnings
-    import NavToolsLib as nt
     import sqlite3
     import ftplib
+    from NavToolsLib import NavTools
 
     warnings.filterwarnings("ignore")
 except ImportError as e:
@@ -189,7 +190,7 @@ def uploadMySQLfile(sql_file, verbose=True):
     FTP_HOST = "kaiserware.bplaced.net"
     FTP_USER = "kaiserware"
     FTP_PW = "vesret2204"
-    settings = nt.getNavConfig()
+    settings = navtools.getConfig()
 
     if("sqlite_files\\ToernDirectoryTable.sql" in sql_file):
         sqliteFile = os.path.normpath(settings['toernDirectory'])
@@ -266,7 +267,7 @@ def FTPupload():
     FTP_HOST = "kaiserware.bplaced.net"
     FTP_USER = "kaiserware"
     FTP_PW = "vesret2204"
-    settings = nt.getNavConfig()
+    settings = navtools.getConfig()
 
     ftp_server = ftplib.FTP(FTP_HOST, FTP_USER, FTP_PW)
     ftp_server.cwd("www")
@@ -274,7 +275,7 @@ def FTPupload():
     filename = os.path.basename(settings["sqliteDB"])
     ret = ftp_server.storbinary('STOR %s' % filename, fh_sqlite)
     ftp_server.close()
-    
+
     return ret
 
 
@@ -289,14 +290,15 @@ if __name__ == "__main__":
     print(__doc__)
 
     # load configuration data
-    settings = nt.getNavConfig(False)
+    navtools = NavTools()
+    settings = navtools.getConfig(False)
 
     path = settings['toernDirectory']
 
     #r = upload_to_sqlite(settings['sqlitePath'], "test")
 
     msg = uploadMySQLfile(path)
-    
+
     if not msg:
         print("\nError in uploadMySQLfile()!")
     else:
