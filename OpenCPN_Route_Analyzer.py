@@ -38,6 +38,7 @@ navtools = None
 try:
     import sys
     import os
+    import argparse
     from NavToolsLib import NavTools
 
 except ImportError as e:
@@ -60,34 +61,32 @@ def processRoute(name, route, verbose, skipWPsFlag, noSpeed):
 |------------------------------------------------------------------------------------------
 """
 if __name__ == "__main__":
-    print("\nStarting %s" % __app__)
+    print(f"\nStarting {__app__}")
     print(__doc__)
 
     #
     # fetch the supplied program parameters
     #
-    verbose = False
-    skipWPsFlag = ""
+    verbose = True
+    skipWPsFlag = False
     routeName = ""
     fileName = ""
     noSpeed = False
     noSpeedTxt = ""
 
-    for val in sys.argv[1:]:
-        if (val.find("route=") != -1):
-            route = val.split("=")
-            routeName = route[1]
-        elif (val.find("file=") != -1):
-            filen = val.split("=")
-            fileName = filen[1].replace("|", " ")
-        elif (val.lower() == "verbose"):
-            verbose = True
-        elif (val.lower() == "quiet"):
-            verbose = False
-        elif (val.lower() == "nospeed"):
-            noSpeed = True
-        elif (val.lower() == "skipWP"):
-            skipWPsFlag = True
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-v", "--verbose", help="run in verbose mode",
+                        default=False, action="store_true")
+    parser.add_argument("-n", "--noSpeed", help="don't compute speed along the route",
+                        default=False, action="store_true")
+    parser.add_argument("-s", "--skipWP", help="skip Waypoints",
+                        default=False, action="store_true")
+    parser.add_argument("-file", help="route file name",
+                        type=str, default="")
+    parser.add_argument("-route", help="route name",
+                        type=str, default="")
+
+    args = parser.parse_args()
 
     try:
         # =======================================================================
@@ -110,31 +109,45 @@ if __name__ == "__main__":
             verboseTxt = settings['verbose']
         else:
             raise Exception(
-                "Error reading from configuration file ('{}')".format(settings['error']))
+                f"Error reading from configuration file ('{settings['error']}')")
 
     except Exception as e:
         lastRoute = "None"
         verboseTxt = ""
         skipWPTxt = ""
         noSpeedTxt = ""
-        print("\nUsing default path and route name. Error:\n'%s'\nreading the config file." % str(e))
+        print(
+            f"\nUsing default path and route name. Error:\n'{str(e)}'\nreading the config file.")
+
+    print(args.verbose)
 
     # the program parameters have preference over the settings file parameters
-    if (routeName == ""):
-        routeName = lastRoute
-    if (fileName != ""):
-        openCPNroutes = fileName
-    if (verbose == ""):
+    if args.verbose:
+        verbose = args.verbose
+    else:
         verbose = (verboseTxt == "verbose")
-    if (skipWPsFlag == ""):
-        skipWPsFlag = (skipWPTxt == "True")
-    if (noSpeed is not False):
+    if args.noSpeed:
+        noSpeed = args.noSpeed
+    else:
         noSpeed = (noSpeedTxt == "True")
+    if args.skipWP:
+        skipWPsFlag = args.skipWP
+    else:
+        skipWPsFlag = (skipWPTxt == "True")
+    if args.route != "":
+        routeName = args.route
+    else:
+        routeName = lastRoute
+    if args.file != "":
+        openCPNroutes = args.file
+    else:
+        openCPNroutes = fileName
 
     print(f"OpenCPN routes.: '{gpxPath}'")
     print(f"Route..........: '{lastRoute}'")
     print(f"skip WPs.......: {skipWPsFlag}")
     print(f"compute speed..: {(not noSpeed)}")
+    print(f"verbose........: {(verbose)}")
 
     try:
         path = os.path.join(gpxPath, lastRoute+".gpx")

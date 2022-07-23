@@ -16,7 +16,6 @@ __license__ = "GNU General Public License, published by the Free Software Founda
 __version__ = "version 1.5, Python 3.7"
 __app__ = "uploadMySQL.py"
 
-navtools = None
 try:
     # import python system modules
     import os
@@ -32,6 +31,8 @@ try:
     from NavToolsLib import NavTools
 
     warnings.filterwarnings("ignore")
+    navtools = NavTools()
+
 except ImportError as e:
     msg = "Import error: " + str(e) + "\nAborting the program " + __version__
     raise Exception(msg)
@@ -42,7 +43,7 @@ except ImportError as e:
 def upload_to_sqlite(DBfile, query):
     """
     |------------------------------------------------------------------------------------------
-    | function to execute queries in the sqlite DB 'toernsDB.sqlite' 
+    | function to execute queries in the sqlite DB 'toernsDB.sqlite'
     |
     | @param      - DBfile path/filename of the SQLite DB
     | @param      - query string with the MySQL query to be executes
@@ -58,11 +59,11 @@ def upload_to_sqlite(DBfile, query):
         db.commit()
         db.close()
 
-        msg = "Updated %s records in the SQlite DB using Python." % rec
+        msg = f"Updated {rec} records in the SQlite DB using Python."
         ret = {"msg": msg, "status": "success"}
 
     except Exception as e:
-        msg = "Error accessing the SQLite DB '%s':\n%s." % (DBfile, str(e))
+        msg = f"Error accessing the SQLite DB '{DBfile}':\n{str(e)}."
         ret = {"msg": msg, "status": "failure"}
 
     return ret
@@ -92,7 +93,7 @@ def upload_to_mysql(host, query):
         db_name = "southme1_map"
     else:
         # bplaced.net doesn't allow external access to MySQL DB
-        msg = "MySQL DB connection on host '%s' not implemented!" % host
+        msg = f"MySQL DB connection on host '{host}' not implemented!"
         msg += " Error code: authentication error"
         ret = {"msg": msg, "status": "failure"}
         return ret
@@ -106,12 +107,9 @@ def upload_to_mysql(host, query):
         )
         # print ("Connected to MySQL DB '%s' on host '%s' (%s)" %(db_name, host, db_host))
     except Exception as e:
-        msg = "Failed to connect to DB '%s' on host '%s' (%s)" % (
-            db_name,
-            host,
-            db_host,
-        )
-        msg += " Error code: %s." % str(e)
+        msg = (f"Failed to connect to DB '{db_name}' on"
+               f" host '{host}' ({db_host})"
+               f" Error code: {str(e)}.")
         ret = {"msg": msg, "status": "failure"}
         return ret
 
@@ -121,13 +119,13 @@ def upload_to_mysql(host, query):
         connection.commit()
         # print ("%s record(s) updated using the query:\n '%s'\n" %(rec, query))
         connection.close()
-    except Exception as f:
-        msg = "Failed to execute the query:\n '%s'.\n" % query
-        msg += " Error code: %s." % str(f)
+    except Exception as e:
+        msg = (f"Failed to execute the query:\n '{query}'.\n"
+               f" Error code: {str(e)}.")
         ret = {"msg": msg, "status": "failure"}
         return ret
 
-    msg = "Updated %s records in the MySQL DB using Python." % rec
+    msg = f"Updated {rec} records in the MySQL DB using Python."
     ret = {"msg": msg, "status": "success"}
     return ret
 
@@ -156,7 +154,7 @@ def upload_to_mysql_via_php(host, query):
         db_pass = "Vesret7713"
     else:
         msg = "MySQL DB connection on host '%s' not implemented!" % host
-        print("\n%s" % msg)
+        print(f"\n{msg}")
         ret = {"msg": msg, "status": "failure"}
         return ret
 
@@ -168,18 +166,18 @@ def upload_to_mysql_via_php(host, query):
         ret = response.read().decode("utf-8")
         ret = ast.literal_eval(ret)  # convert the string to dictionary
     except urllib.error.HTTPError as e:
-        msg = "The server could not fulfill the request."
-        msg += " Error code: %s" % str(e.code)
+        msg = (f"The server could not fulfill the request."
+               f" Error code: {str(e.code)}")
         print(msg)
         ret = {"msg": msg, "status": "failure"}
     except urllib.error.URLError as e:
-        msg = "We failed to reach a server."
-        msg += " Error code: %s" % str(e.reason)
+        msg = (f"We failed to reach a server."
+               f" Error code: {str(e.reason)}")
         print(msg)
         ret = {"msg": msg, "status": "failure"}
     except Exception as e:
-        msg = "We encountered an undefined urllib error."
-        msg += " Error code: %s" % str(e)
+        msg = (f"We encountered an undefined urllib error."
+               f" Error code: {str(e)}")
         print(msg)
         ret = {"msg": msg, "status": "failure"}
 
@@ -198,7 +196,7 @@ def uploadMySQLfile(sql_file, verbose=True):
         sqliteFile = os.path.normpath(sql_file.replace("gpx", "sql"))
 
     if verbose:
-        print("uploadMySQLFile sqlite:.'%s'" % sqliteFile)
+        print(f"uploadMySQLFile sqlite:.'{sqliteFile}'")
 
     try:
         with open(sqliteFile, "r") as file:
@@ -229,13 +227,12 @@ def uploadMySQLfile(sql_file, verbose=True):
 
     except IOError as e:
         print(
-            "\nUnable to open the sql query file '%s' (error: '%s').  Terminating now." % (
-                sql_file, e.strerror)
-        )
+            f"\nUnable to open the sql query file '{sql_file}'"
+            f" (error: '{e.strerror}').  Terminating now.")
         return False
 
     except:
-        print("Unexpected Error: '%s'" % (sys.exc_info()[0]))
+        print(f"Unexpected Error: '{sys.exc_info()[0]}'")
         return False
 
     # print ("\nCreate: ",sqliteCreate)
@@ -244,8 +241,8 @@ def uploadMySQLfile(sql_file, verbose=True):
 
     if sqliteInsert == "":
         print(
-            "\nUnable to extract the sql query from the file '%s'.  Terminating now."
-            % sql_file
+            f"\nUnable to extract the sql query from the file "
+            f"'{sql_file}'.  Terminating now."
         )
         return False
 
@@ -273,7 +270,7 @@ def FTPupload():
     ftp_server.cwd("www")
     fh_sqlite = open(settings["sqliteDB"], 'rb')
     filename = os.path.basename(settings["sqliteDB"])
-    ret = ftp_server.storbinary('STOR %s' % filename, fh_sqlite)
+    ret = ftp_server.storbinary(f"STOR {filename}", fh_sqlite)
     ftp_server.close()
 
     return ret
@@ -286,23 +283,22 @@ def FTPupload():
 |------------------------------------------------------------------------------------------
 """
 if __name__ == "__main__":
-    print("\nStarting %s" % __app__)
+    print(f"\nStarting {__app__}")
     print(__doc__)
 
     # load configuration data
-    navtools = NavTools()
     settings = navtools.getConfig(False)
 
     path = settings['toernDirectory']
 
-    #r = upload_to_sqlite(settings['sqlitePath'], "test")
+    # r = upload_to_sqlite(settings['sqlitePath'], "test")
 
     msg = uploadMySQLfile(path)
 
     if not msg:
         print("\nError in uploadMySQLfile()!")
     else:
-        print("\nuploadMySQL return:\n%s " % msg)
+        print(f"\nuploadMySQL return:\n{msg}")
 
     FTPupload()
 

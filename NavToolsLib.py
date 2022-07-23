@@ -283,7 +283,7 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
                 if (desc.startswith('homeport') and wpCTR > 0):
                     if ('arrival' in desc):
                         desc_arr = desc.split('\n')
-                        desc = desc_arr[2]
+                        desc = desc_arr[1]
 
                 if (desc.startswith('departure')):
                     time = desc.replace('departure ', '')
@@ -424,6 +424,7 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
         """--------------------------------------------------------------------------
             Method to compute the distance between two lat/lon positions
             in nautical miles (nm)
+            Calculations match Expedition but not OpenCPN
 
         Args:
             latFrom (float): starting point latitude in degress
@@ -435,9 +436,11 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
             (float) distance in nm
         """
 
-        KM_NM = 0.539956803   # km to nm conversion factor
+        # same values as used in the Toerns Website "plotroute.html"
+        # calculations match Expedition but not OpenCPN
         # Earth RADIUS (in km) as per Google Maps converted to nm
-        RADIUS = 6378.2334*KM_NM
+        KM_NM = 0.539956803       # km to nm conversion factor
+        RADIUS = 6378.2334*KM_NM  # earth radius in nm
         dLat = math.radians(latTo - latFrom)
         dLon = math.radians(lonTo - lonFrom)
         lat1 = math.radians(latFrom)
@@ -846,7 +849,8 @@ if __name__ == "__main__":
     # {cwd, gpxPath, sqlitePath, lastGPX, lastRoute, skipWP, noSpeed, verbose, error}
     navtools = NavTools()
     settings = navtools.getConfig(verbose=True)
-    msg = navtools.verifyGPXRouteFile(settings['gpxPath'], "Antigua.gpx")
+    msg = navtools.verifyGPXRouteFile(
+        settings['gpxPath'], "2021_Bayfield_Soo_Delivery.gpx")
     print(f"\nVerify GPX Route File: {msg}")
 
     print(f"verifyToerndirectoryDistances:")

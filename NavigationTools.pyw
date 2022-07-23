@@ -4,12 +4,12 @@
 __author__ = "Volker Petersen <volker.petersen01@gmail.com>"
 __app__ = "Navigation Tools App"
 __version__ = "Version: 2.1.5, Python 3.8"
-__date__ = "Date: 2011/09/26 | 2015/08/08 | 2019/11/14 | 2021/10/12"
+__date__ = "Date: 2011/09/26 | 2015/08/08 | 2019/11/14 | 2022/06/29"
 __copyright__ = "Copyright (c) 2011 Volker Petersen"
 __license__ = "GNU General Public License, published by the Free Software Foundation"
 __doc__ = """
 --------------------------------------------------------------------------------
-The 'Navigation Tools App' integrates various tools in one GUI.
+The 'Navigation Tools App' integrates various tools into one GUI.
 The tools convert route data between various file formats (gpx, kml, sql, spot).
 In addition the software can upload SQL files to the Toern website and compute
 route statistics.
