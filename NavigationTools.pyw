@@ -749,10 +749,9 @@ class NavigationTools(wx.Frame):
         """ Upload data from a MySQL query to my two websites """
 
         dlg = wx.ProgressDialog(
-            "MySQL Query Upload", "Processing route data....", 100.0
-        )
+            "MySQL Query Upload", "Processing route data....", 100)
 
-        dlg.Update(33.0)
+        dlg.Update(33)
 
         msg1 = uploadMySQLfile(self.toernDirectory, False)
         if not msg1:
@@ -762,7 +761,7 @@ class NavigationTools(wx.Frame):
             msg1 = msg1["Insert"]["msg"]
             # print("\n%s table ToernDirectoryTable.sql" %msg1)
 
-        dlg.Update(67.0)
+        dlg.Update(67)
         filename = self.filename + self.extension["sql"]
         msg2 = uploadMySQLfile(os.path.join(self.pathSQLite, filename), False)
         if not msg2:
