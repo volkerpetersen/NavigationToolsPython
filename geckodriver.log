@@ -482,3 +482,91 @@ JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeE
 console.warn: LoginRecipes: "getRecipes: falling back to a synchronous message for:" "https://www.pythonanywhere.com"
 JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 136: TypeError: can't access property "getRecipesForHost", gRecipeManager is null
 1658583923418	Marionette	INFO	Stopped listening on port 4220
+1663851817907	geckodriver	INFO	Listening on 127.0.0.1:58107
+1663851820971	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "58108" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileu2VCAw"
+1663851821694	Marionette	INFO	Marionette enabled
+1663851821702	Marionette	INFO	Listening on port 58120
+WebDriver BiDi listening on ws://127.0.0.1:58108
+1663851822132	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileu2VCAw\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:58108/devtools/browser/867cec17-2fa4-4012-a8c7-5b4387f4fab1
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+1663851856965	Marionette	INFO	Stopped listening on port 58120
+[Parent 19564, Main Thread] WARNING: ContentParent: id=218ddacfc00 - BlockShutdown: NotifyImpendingShutdown.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3635
+[Parent 19564, Main Thread] WARNING: ContentParent: id=218dea70a00 - BlockShutdown: NotifyImpendingShutdown.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3635
+[Parent 19564, Main Thread] WARNING: ContentParent: id=218dfb49200 - BlockShutdown: NotifyImpendingShutdown.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3635
+[Parent 19564, Main Thread] WARNING: ContentParent: id=218dfb49200 - BlockShutdown: CanSend.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3680
+[Parent 19564, Main Thread] WARNING: ContentParent: id=218dfb49200 - ShutDownProcess: Sent shutdown message.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:1803
+[Parent 19564, Main Thread] WARNING: ContentParent: id=218dfb49200 - ShutDownProcess: Closing channel.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:1843
+[Parent 19564, Main Thread] WARNING: ContentParent: id=218dfb49200 - RemoveShutdownBlockers: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3795
+1663851857626	geckodriver	INFO	Listening on 127.0.0.1:58246
+1663851860681	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "58247" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileg1cMgH"
+1663851861311	Marionette	INFO	Marionette enabled
+1663851861315	Marionette	INFO	Listening on port 58277
+WebDriver BiDi listening on ws://127.0.0.1:58247
+1663851861797	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileg1cMgH\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:58247/devtools/browser/53a3ee41-d0e4-49ed-8057-8c6b427ff004
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+1663851895594	Marionette	INFO	Stopped listening on port 58277
+[Parent 25416, Main Thread] WARNING: ContentParent: id=1dd04ae2b00 - BlockShutdown: NotifyImpendingShutdown.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3635
+[Parent 25416, Main Thread] WARNING: ContentParent: id=1dd05bd2700 - BlockShutdown: NotifyImpendingShutdown.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3635
+[Parent 25416, Main Thread] WARNING: ContentParent: id=1dd0350c000 - BlockShutdown: NotifyImpendingShutdown.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3635
+[Parent 25416, Main Thread] WARNING: ContentParent: id=1dd0350c000 - BlockShutdown: CanSend.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3680
+[Parent 25416, Main Thread] WARNING: ContentParent: id=1dd0350c000 - ShutDownProcess: Sent shutdown message.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:1803
+[Parent 25416, Main Thread] WARNING: ContentParent: id=1dd0350c000 - ShutDownProcess: Closing channel.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:1843
+[Parent 25416, Main Thread] WARNING: ContentParent: id=1dd0350c000 - RemoveShutdownBlockers: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3795
+1663851896354	geckodriver	INFO	Listening on 127.0.0.1:58393
+1663851899416	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "58394" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileZaVC0B"
+1663851899803	Marionette	INFO	Marionette enabled
+1663851899807	Marionette	INFO	Listening on port 58405
+WebDriver BiDi listening on ws://127.0.0.1:58394
+1663851900142	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileZaVC0B\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:58394/devtools/browser/454ff719-9fd5-4cec-a53c-b2bd930a6cc8
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.pythonanywhere.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.pythonanywhere.com."
+1663851911230	Marionette	INFO	Stopped listening on port 58405
+[Parent 19072, Main Thread] WARNING: ContentParent: id=261abaa9400 - BlockShutdown: NotifyImpendingShutdown.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3635
+[Parent 19072, Main Thread] WARNING: ContentParent: id=261ab980b00 - BlockShutdown: NotifyImpendingShutdown.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3635
+[Parent 19072, Main Thread] WARNING: ContentParent: id=261aad11a00 - BlockShutdown: NotifyImpendingShutdown.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3635
+[Parent 19072, Main Thread] WARNING: ContentParent: id=261aad11a00 - BlockShutdown: CanSend.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3680
+[Parent 19072, Main Thread] WARNING: ContentParent: id=261aad11a00 - ShutDownProcess: Sent shutdown message.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:1803
+[Parent 19072, Main Thread] WARNING: ContentParent: id=261aad11a00 - ShutDownProcess: Closing channel.: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:1843
+[Parent 19072, Main Thread] WARNING: ContentParent: id=261aad11a00 - RemoveShutdownBlockers: file /builds/worker/checkouts/gecko/dom/ipc/ContentParent.cpp:3795
+1665800443804	geckodriver	INFO	Listening on 127.0.0.1:60967
+1665800446861	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "60968" "-no-remote" "-profile" "C:\\Users\\VOLKER~1\\AppData\\Local\\Temp\\rust_mozprofileiXTTOa"
+1665800447359	Marionette	INFO	Marionette enabled
+1665800447369	Marionette	INFO	Listening on port 60973
+WebDriver BiDi listening on ws://127.0.0.1:60968
+1665800447568	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\VOLKER~1\\AppData\\Local\\Temp\\rust_mozprofileiXTTOa\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:60968/devtools/browser/d5a8e0a3-f285-42fc-952b-fe5f69d6f727
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+1665800485168	Marionette	INFO	Stopped listening on port 60973
+1665800486888	geckodriver	INFO	Listening on 127.0.0.1:61155
+1665800489926	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "61156" "-no-remote" "-profile" "C:\\Users\\VOLKER~1\\AppData\\Local\\Temp\\rust_mozprofilePAUSWk"
+1665800490417	Marionette	INFO	Marionette enabled
+1665800490425	Marionette	INFO	Listening on port 61161
+WebDriver BiDi listening on ws://127.0.0.1:61156
+1665800490622	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\VOLKER~1\\AppData\\Local\\Temp\\rust_mozprofilePAUSWk\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:61156/devtools/browser/96deef3c-5aa2-4097-89e7-db99a1e92230
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+1665800526334	Marionette	INFO	Stopped listening on port 61161
+1665800527570	geckodriver	INFO	Listening on 127.0.0.1:61337
+1665800530618	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "61338" "-no-remote" "-profile" "C:\\Users\\VOLKER~1\\AppData\\Local\\Temp\\rust_mozprofilerJbawF"
+1665800531090	Marionette	INFO	Marionette enabled
+1665800531097	Marionette	INFO	Listening on port 61343
+WebDriver BiDi listening on ws://127.0.0.1:61338
+1665800531292	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\VOLKER~1\\AppData\\Local\\Temp\\rust_mozprofilerJbawF\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:61338/devtools/browser/0a1cf53a-6b9d-4a6b-beb3-7e84057b13fd
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.pythonanywhere.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.pythonanywhere.com."
+1665800542749	Marionette	INFO	Stopped listening on port 61343
+JavaScript error: resource://services-settings/Utils.jsm, line 239: TypeError: NetworkError: Network request failed
