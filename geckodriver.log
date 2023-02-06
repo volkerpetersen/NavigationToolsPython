@@ -570,3 +570,42 @@ console.warn: LoginRecipes: "Falling back to a synchronous message for: https://
 console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.pythonanywhere.com."
 1665800542749	Marionette	INFO	Stopped listening on port 61343
 JavaScript error: resource://services-settings/Utils.jsm, line 239: TypeError: NetworkError: Network request failed
+1671111602814	geckodriver	INFO	Listening on 127.0.0.1:24967
+1671111605887	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "24968" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileV6K35Y"
+1671111606595	Marionette	INFO	Marionette enabled
+Dynamically enable window occlusion 0
+1671111606601	Marionette	INFO	Listening on port 24975
+WebDriver BiDi listening on ws://127.0.0.1:24968
+1671111606949	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileV6K35Y\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:24968/devtools/browser/f06bc5d8-fb7d-47cb-993d-35f408caec7a
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+1671111641191	Marionette	INFO	Stopped listening on port 24975
+Dynamically enable window occlusion 1
+1671111641853	geckodriver	INFO	Listening on 127.0.0.1:25067
+1671111644909	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "25068" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileJCOCnP"
+1671111645450	Marionette	INFO	Marionette enabled
+Dynamically enable window occlusion 0
+1671111645454	Marionette	INFO	Listening on port 25080
+WebDriver BiDi listening on ws://127.0.0.1:25068
+1671111646059	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofileJCOCnP\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:25068/devtools/browser/7cf0b2c5-e9cb-4b4a-a671-c6f0f31179e2
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://my.bplaced.net."
+1671111679486	Marionette	INFO	Stopped listening on port 25080
+Dynamically enable window occlusion 1
+1671111680341	geckodriver	INFO	Listening on 127.0.0.1:25165
+1671111683394	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Firefox Developer Edition\\firefox.exe" "--marionette" "--remote-debugging-port" "25166" "-no-remote" "-profile" "C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilepCVgIG"
+1671111683679	Marionette	INFO	Marionette enabled
+Dynamically enable window occlusion 0
+1671111683685	Marionette	INFO	Listening on port 25171
+WebDriver BiDi listening on ws://127.0.0.1:25166
+1671111684043	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\volke\\AppData\\Local\\Temp\\rust_mozprofilepCVgIG\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:25166/devtools/browser/4f54069d-d456-4964-aedf-5bf293f06787
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.pythonanywhere.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.pythonanywhere.com."
+1671111695164	Marionette	INFO	Stopped listening on port 25171
+Dynamically enable window occlusion 1
