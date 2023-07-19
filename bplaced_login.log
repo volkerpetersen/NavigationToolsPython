@@ -131,6 +131,7 @@ Your last sign-in was on 15. October 2022, at 04:21
 
 2022-10-14 21:22:24 login into 'https://www.pythonanywhere.com/login/?next=/login/' with user account 'volkersailing' yielded:
 This site will be disabled on Sunday 15 January 2023
+<<<<<<< HEAD
 
 2023-02-19 08:08:43 login into 'https://my.bplaced.net/php' with user account 'volker.petersen01@gmail.com' yielded:
 Your last sign-in was on 18. February 2023, at 19:23
@@ -335,3 +336,15 @@ Your last sign-in was on 16. July 2023, at 16:50
 
 2023-07-18 08:05:37 login into 'https://www.pythonanywhere.com/login/?next=/login/' with user account 'volkersailing' yielded:
 This site will be disabled on Wednesday 18 October 2023
+||||||| c7adc89
+=======
+
+2022-12-15 07:40:41 login into 'https://my.bplaced.net/php' with user account 'volker.petersen01@gmail.com' yielded:
+Your last sign-in was on 15. October 2022, at 04:20
+
+2022-12-15 07:41:20 login into 'https://my.bplaced.net/php' with user account 'volker.petersen@outlook.com' yielded:
+Your last sign-in was on 15. October 2022, at 04:21
+
+2022-12-15 07:41:36 login into 'https://www.pythonanywhere.com/login/?next=/login/' with user account 'volkersailing' yielded:
+This site will be disabled on Wednesday 15 March 2023
+>>>>>>> 25d20399ee3fb1202e2a079fee117437d4b69228
