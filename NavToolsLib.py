@@ -28,7 +28,7 @@ try:
     import inspect
     import json
     import re
-    from datetime import datetime
+    from datetime import datetime, timedelta
     from bs4 import BeautifulSoup
     # import lxml
     import random
@@ -49,11 +49,10 @@ class NavTools:
         self.configFile = 'NavConfig.ini'
         self.genericWPs = ['NM', 'WPT', 'WP', '0']
         self.WPtypes = ['harbor', 'circle', 'service-marina', 'anchorage']
-        self.sql_header = """-- Table structure for table "Table_Name"
+        self.sql_header = """DROP TABLE IF EXISTS "Table_Name";
 CREATE TABLE IF NOT EXISTS "Table_Name" (
-"id" INTEGER,
-"from" TEXT,
-"to" TEXT,
+"id" INTEGER UNIQUE,
+"name" TEXT,
 "lat" REAL,
 "lon" REAL,
 "type" TEXT,
@@ -61,14 +60,7 @@ CREATE TABLE IF NOT EXISTS "Table_Name" (
 "notes" TEXT,
 PRIMARY KEY ("id")
 );
-
-DELETE FROM "Table_Name";
---
--- Dumping data for table "Table_Name"
--- roundtrip	=> if first and last waypoint in the file are the same
--- one-way trip => if first and last waypoint are different
---
-INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "notes") VALUES\n"""
+INSERT INTO "Table_Name" ("id", "name", "lat", "lon", "type", "image", "notes") VALUES\n"""
 
     def __str__(self):
         return f"Nav Config is using the init file '{self.configFile}'."
@@ -168,6 +160,8 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
                 print(f"Last GPX Route file..: '{last_route}'")
                 print(f"Skip WPs.............: '{rawSettings['skipWP']}'")
                 print(f"No Speed.............: '{rawSettings['noSpeed']}'")
+                print(f"Timezone Difference..: {rawSettings['TimeZoneDifference']:.1f} hrs beteen racecourse and UTC")
+                print(f"Minimum Course Change: {rawSettings['minCourseChange']:.2f} degrees")
                 print(f"Verbose..............: '{rawSettings['verbose']}'")
 
             settings['cwd'] = cwd
@@ -180,6 +174,8 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
             settings['noSpeed'] = rawSettings['noSpeed']
             settings['verbose'] = rawSettings['verbose']
             settings['error'] = True
+            settings['TimeZoneDifference'] = rawSettings['TimeZoneDifference']
+            settings['minCourseChange'] = rawSettings['minCourseChange']
 
         except Exception as e:
             self.error(e, "getConfig")
@@ -420,6 +416,46 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
                     else:
                         print(exif)
 
+    def calc_heading(self, latFrom, lonFrom, latTo, lonTo):
+        """--------------------------------------------------------------------------
+            Method to compute the heading between two lat/lon positions
+            in degrees between 0 and 359
+
+        Args:
+            latFrom (str): starting point latitude in degress
+            lonFrom (str): starting point longitude in degress
+            latto (str):   ending point latitude in degress
+            lonTo (str):   ending point longitude in degress
+
+        Return:
+            (float) degrees (between 0 and 359)
+        """
+        precision = 0.0000001
+
+        try:
+            latFrom = float(latFrom)
+            lonFrom = float(lonFrom)
+            latTo = float(latTo)
+            lonTo = float(lonTo)
+        except Exception as e:
+            print(f"calc_heading(): error converting lat/lon strings to float")
+            return 0.0
+        
+        dLon = math.radians(lonTo - lonFrom)
+        lat1 = math.radians(latFrom)
+        lat2 = math.radians(latTo)
+
+        x = (math.cos(lat1) * math.sin(lat2)
+            - math.sin(lat1)*math.cos(lat2)*math.cos(dLon))
+ 
+        y = math.sin(dLon) * math.cos(lat2)
+
+        if(abs(x) < precision and abs(y) < precision):
+            return 0.0
+        
+        return ((360.0 + math.degrees(math.atan2(y, x)) ) % 360)
+
+
     def calc_distance(self, latFrom, lonFrom, latTo, lonTo):
         """--------------------------------------------------------------------------
             Method to compute the distance between two lat/lon positions
@@ -552,13 +588,13 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
             lat = wp['lat']
             lon = wp['lon']
             if (ctr == 0):
-                output += "(" + str(ctr)+", '"+name+"', '" + name + "', " + \
+                output += "(" + str(ctr)+", '" + name + "', " + \
                     "'" + str(lat) + "', '" + str(lon) + \
                     "', 'harbor', '', ''),\n"
                 route = 'harbor'
                 first_lat = lat
                 first_lon = lon
-                old_name = name
+                #print(output)
             if (ctr > 0):
                 """
                 -----------------------------------------------------------------
@@ -601,16 +637,16 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
                         route = 'none'
                     else:
                         route = 'route'
-                output += "(" + str(ctr)+", '" + old_name + "', '" + name + \
+                output += "(" + str(ctr)+", '" + name + \
                     "', " + "'" + str(lat) + "', '" + str(lon) + "', '"
                 output += route + "', '', " + notes + "),\n"
             # print(f"from: {old_name}  to: {name}")
-            old_name = name
             rows.append([ctr, name, lat, lon, route])
             old_lat = float(lat)
             old_lon = float(lon)
             ctr += 1
         # print (f"Total trip across {ctr} waypoints: {total:0.2f}nm.")
+        
         txt = txt + (f"Total trip across {ctr} waypoints: {total:,.2f}nm.")
         output = output[:-2] + ";"
         outputFile.write(output)
@@ -625,10 +661,29 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
         log_msg = msg + log_msg
         return log_msg
 
-    def parseKMLRouteFile(self, pathGPX, filename, boatname):
+    def getTime(self, timeStr, timezoneDifference=0.0):
+        """--------------------------------------------------------------------------
+        Method to convert a Yellowbrick time string into a datetime value
+        and convert from UTC time to the racecourse time using the 
+        parameter timezoneDifference (in hrs). 
+
+        Args:
+            timeStr (string):  time string format used by Yellowbrick
+            timezoneDifference (float): timezone difference between UTC and the race course
+
+        Return:
+            (datetime) time value from the timeStr string
+        """
+        t = timeStr.replace("T", " ")
+        t = t[:len(t)-4]
+        dt = datetime.strptime(t, "%Y-%m-%d %H:%M")
+        return (dt+timedelta(hours=timezoneDifference))
+
+    def parseKMLRouteFile(self, pathGPX, filename, boatname, timezoneDifference, minCourseChange):
         """--------------------------------------------------------------------------
         Method to parse the waypoint and route information from a .kml 
-        file into a GPS file.
+        file into a GPS file. Only after a course change of at least
+        'minCourseChange' degrees will a new waypoint be created.
         Yellowbrick race tracking route files are available at
         https://yb.tl/racenamexyz.kml
 
@@ -636,12 +691,13 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
             pathGPX (string):  path to the gpx file location
             filename (string): name of the file
             boatname (string): name of the boat in the .kml file
+            timezoneDifference (float): racecourse timezone difference to UTC
+            minCourseChange (float): minimum course change before a new WP is generated
 
         Return:
             (string) with the log messages
         """
 
-        today = datetime.now()
         log_msg = ""
         ctr = 0
 
@@ -650,12 +706,12 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
     <rte>
     <name>nameX</name>
     <extensions>
-    <opencpn:guid>715affff-de7d-4094-9e87-RANDOM</opencpn:guid>
-    <opencpn:viz>1</opencpn:viz>
-    <opencpn:start>Start</opencpn:start>
-    <opencpn:end>End</opencpn:end>
-    <opencpn:planned_speed>5.00</opencpn:planned_speed>
-    <opencpn:time_display>PC</opencpn:time_display>
+      <opencpn:guid>715affff-de7d-4094-9e87-RANDOM</opencpn:guid>
+      <opencpn:viz>1</opencpn:viz>
+      <opencpn:start>Start</opencpn:start>
+      <opencpn:end>End</opencpn:end>
+      <opencpn:planned_speed>5.00</opencpn:planned_speed>
+      <opencpn:time_display>PC</opencpn:time_display>
     </extensions>
     """
 
@@ -665,14 +721,15 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
     <sym>empty</sym>
     <type>WPT</type>
     <extensions>
-    <opencpn:guid>715bffff-e783-458a-87cf-RANDOM</opencpn:guid>
-    <opencpn:viz_name>0</opencpn:viz_name>
-    <opencpn:auto_name>1</opencpn:auto_name>
-    <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
-    <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+      <opencpn:guid>715bffff-e783-458a-87cf-RANDOM</opencpn:guid>
+      <opencpn:viz_name>0</opencpn:viz_name>
+      <opencpn:auto_name>1</opencpn:auto_name>
+      <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+      <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
     </extensions>
-    </rtept>"""
-        gpxRouteEnd = "</rte></gpx>"
+    </rtept>
+    """
+        gpxRouteEnd = "</rte></gpx>\n"
 
         try:
             pathKML = os.path.join(pathGPX, filename+".kml")
@@ -684,17 +741,21 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
             return False
         pathGPX = os.path.join(pathGPX, filename+".gpx")
         outputfile = open(pathGPX, "w")
-        kml = BeautifulSoup(xml, "xml")
+        kml = BeautifulSoup(xml)
+        # different Yellowbrick kml files use different spellings
         records = kml.find_all("ns2:Placemark")
+        if not len(records):
+            records = kml.find_all("ns2:placemark")
         locations = []
         times = []
         if len(records):
-            # print(f"\nfound {len(records)} boat names")
+            #print(f"\nfound {len(records)} boat names")
             ctr = 0
+            wpCTR = 0
             for record in records:
                 boat = record.find_all("ns2:name")
                 if boatname.lower() in boat[0].contents[0].lower():
-                    # print(f"\n\nfound our boat: {boat[0].contents[0]}\n")
+                    #print(f"\n\nfound our boat: {boat[0].contents[0]}\n")
                     # siblings = list(record.next_siblings)
                     # print(len(siblings))
                     times = record.find_all("ns2:when")
@@ -709,22 +770,52 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
                 gpx = gpxRoute
                 gpx = gpx.replace("nameX", filename)
                 gpx = gpx.replace("RANDOM", rndDigits)
+                lastHDG = 999
+                lastWP = locations[0].contents[0].split(",")
+                lastT = self.getTime(times[0].text, timezoneDifference)
                 for ctr in range(0, len(locations)):
-                    rndDigits = (f"{random.randint(0, 0xFFFFFFFFFFFF):12x}")
-                    wp = gpxRouteWP
-                    wp = wp.replace("RANDOM", rndDigits)
+                    # location info is stored as longitute latitude string pairs
                     latlon = locations[ctr].contents[0].split(",")
-                    wp = wp.replace("latX", latlon[1])
-                    wp = wp.replace("lonX", latlon[0])
-                    wp = wp.replace("timeX", times[ctr].contents[0])
-                    wp = wp.replace("wpX", "NM{:05d}".format(ctr+1))
-                    gpx += wp
+                    hdg = self.calc_heading(lastWP[1], lastWP[0], latlon[1], latlon[0])
+                    
+                    # only add a WP if we had a course change larger than minCourseChange
+                    if(ctr==0 or ctr==len(locations)-1 or abs(hdg-lastHDG) > minCourseChange):
+                        #print(f"ctr: {ctr}  wpCTR: {wpCTR}  hdg: {hdg:.2f}")
+                        #print(f"{lastWP[1]}  {lastWP[0]} - {latlon[1]}  {latlon[0]}")
+                        rndDigits = (f"{random.randint(0, 0xFFFFFFFFFFFF):12x}")
+                        wp = gpxRouteWP
+                        wp = wp.replace("RANDOM", rndDigits)
+                        wp = wp.replace("latX", latlon[1])
+                        wp = wp.replace("lonX", latlon[0])
+                        wp = wp.replace("timeX", times[ctr].contents[0])
+                        wp = wp.replace("wpX", "NM{:05d}".format(wpCTR+1))
+                        currentT = self.getTime(times[ctr].text, timezoneDifference)
+                        elapsed = currentT - lastT
+                        strT = currentT.strftime("%Y-%m-%d %H:%M")
+                        if ctr == 0:
+                            wp = wp.replace("empty", "diamond")
+                            wp = wp.replace(
+                                "</name>", f"</name>\n   <desc>departure {strT}</desc>")
+                        if ctr == len(locations)-1:
+                            wp = wp.replace("empty", "diamond")
+                            wp = wp.replace(
+                                "</name>", f"</name>\n   <desc>arrival {strT}</desc>")
+                            elapsed = currentT - currentT
+                        if elapsed.total_seconds() > 4*60*60:
+                            wp = wp.replace(
+                                "</name>", f"</name>\n   <desc>timedleg {strT}</desc>")
+                            lastT = currentT
+                        lastHDG = hdg
+                        wpCTR = wpCTR + 1
+                        gpx += wp
+                    # end of conditional clause testing for large enough course changes
+                    lastWP = latlon
                 # of of loop over all waypoint in the KML file
                 gpx += gpxRouteEnd
                 outputfile.write(gpx)
 
                 log_msg += (
-                    f"Done, parsed a total of {ctr} waypoints for boat '{boatname}' ")
+                    f"Done, parsed a total of {wpCTR} waypoints from {ctr} KML records for boat '{boatname}' ")
                 log_msg += (
                     f"from the KML route file {pathKML} to the OpenCPN route file{pathGPX}\n")
             else:
@@ -842,18 +933,5 @@ if __name__ == "__main__":
     """-------------------------------------------------------------------------
         Script starting point
     """
-    print(f"\nStarting {__app__}")
-    print(__doc__)
 
-    # setting: dictionary with keys:
-    # {cwd, gpxPath, sqlitePath, lastGPX, lastRoute, skipWP, noSpeed, verbose, error}
-    navtools = NavTools()
-    settings = navtools.getConfig(verbose=True)
-    msg = navtools.verifyGPXRouteFile(
-        settings['gpxPath'], "2021_Bayfield_Soo_Delivery.gpx")
-    print(f"\nVerify GPX Route File: {msg}")
-
-    print(f"verifyToerndirectoryDistances:")
-    msg = navtools.verifyToerndirectoryDistances(
-        settings['sqliteDB'], settings['gpxPath'])
-    print(f"{msg}")
+    print(f"\nPlease run NavigationTools.pyw App\n")

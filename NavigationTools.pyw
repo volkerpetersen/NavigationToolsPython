@@ -34,6 +34,8 @@ contain a <desc></desc> tag with these entry options:
                                  times using the above keywords in add'l lines)
 
 Yellowbrick Google Earth files are available at "yb.tl/racenamexxxx.kml"
+e.g.: https://yb.tl/chicagomac2021.kml
+      https://yb.tl/transsuperior2021.kml
 --------------------------------------------------------------------------------
 """
 try:
@@ -44,7 +46,7 @@ try:
     from bs4 import BeautifulSoup
     from tabulate import tabulate
     from datetime import datetime
-    from uploadMySQL import uploadMySQLfile
+    from uploadSQLquery import uploadSQLiteFile
     from NavToolsLib import NavTools
 except ImportError as e:
     print(f"Import error: {str(e)}\nAborting the program {__app__}")
@@ -156,7 +158,7 @@ class NavigationTools(wx.Frame):
         convert_KML_GPX = convertMenu.Append(
             wx.ID_ANY, "Parse &KML->GPX File\tAlt-K")
         convert_uploadMySQL = convertMenu.Append(
-            wx.ID_ANY, "&Upload MySQL File to Sites\tAlt-U"
+            wx.ID_ANY, "&Upload SQL File to Site DBs\tAlt-U"
         )
         convert_addImagesToRoute = convertMenu.Append(
             wx.ID_ANY, "Add &Image to Route\tAlt-I"
@@ -167,7 +169,7 @@ class NavigationTools(wx.Frame):
         self.Bind(wx.EVT_MENU, self.onParseExpeditionRouteFile,
                   convert_Expedition_GPX)
         self.Bind(wx.EVT_MENU, self.onParseKMLRouteFile, convert_KML_GPX)
-        self.Bind(wx.EVT_MENU, self.onUploadMySQLFile, convert_uploadMySQL)
+        self.Bind(wx.EVT_MENU, self.onUploadSQLFile, convert_uploadMySQL)
         self.Bind(wx.EVT_MENU, self.onAddImagesToRoute,
                   convert_addImagesToRoute)
 
@@ -176,7 +178,7 @@ class NavigationTools(wx.Frame):
         menubar.Append(analyzeMenu, "&Analyze")
         analyzeRoute = analyzeMenu.Append(
             wx.ID_ANY, "&Compute Distances\tAlt-C")
-        self.Bind(wx.EVT_MENU, self.onComputeDistances, analyzeRoute)
+        self.Bind(wx.EVT_MENU, self.onComputeRouteDistances, analyzeRoute)
 
         # HELP menu options
         helpMenu = wx.Menu()
@@ -276,13 +278,13 @@ class NavigationTools(wx.Frame):
         b10 = wx.Button(
             self.leftPanel,
             wx.ID_ANY,
-            "Upload MySQL to Sites",
+            "Upload SQL to DBs",
             (lstart, y),
             (blength, bheight),
         )
-        self.Bind(wx.EVT_BUTTON, self.onUploadMySQLFile, b10)
+        self.Bind(wx.EVT_BUTTON, self.onUploadSQLFile, b10)
         b10.SetToolTipString(
-            "Upload a MySQL-query file \n" "to the two A2 MySQL website DBs.\n"
+            "Upload a SQL-query file \n" "to the local and web SQLite DBs.\n"
         )
         y = y + yoffset
 
@@ -298,7 +300,7 @@ class NavigationTools(wx.Frame):
             (lstart, y),
             (blength, bheight),
         )
-        self.Bind(wx.EVT_BUTTON, self.onComputeDistances, b11)
+        self.Bind(wx.EVT_BUTTON, self.onComputeRouteDistances, b11)
         b11.SetToolTipString(
             "Compute Distances, Speed, and Etmals between Waypoints \n"
         )
@@ -309,6 +311,7 @@ class NavigationTools(wx.Frame):
                 lstart, y), (blength, bheight)
         )
         self.Bind(wx.EVT_BUTTON, self.onTimeToExit, b12)
+
 
     # --------------------------------------------------------------------------
     # Event handler to add images to Route Waypoints
@@ -321,7 +324,7 @@ class NavigationTools(wx.Frame):
     # --------------------------------------------------------------------------
     # Event handler to Compute Distances, Speed, and Etmals between Waypoints
     # --------------------------------------------------------------------------
-    def onComputeDistances(self, event):
+    def onComputeRouteDistances(self, event):
         """ compute distances, speed, and Etmals between Waypoints """
 
         try:
@@ -465,18 +468,18 @@ class NavigationTools(wx.Frame):
         for wp in wps:
             wp_data = wp.split(", ")
             # print (len(wp_data), wp)
-            if len(wp_data) > 3:
-                lat = wp_data[3].replace("'", "")
-                lon = wp_data[4].replace("'", "")
-                name = wp_data[2].replace("'", "")
+            if len(wp_data) > 2:
+                lat = wp_data[2].replace("'", "")
+                lon = wp_data[3].replace("'", "")
+                name = wp_data[1].replace("'", "")
                 output += '<rtept lat="' + lat + '" lon="' + lon + '">\n'
                 output += "<time></time>\n"
                 output += "<name>" + name + "</name>\n"
-                if wp_data[2].startswith("WP0"):
+                if wp_data[1].startswith("WP0"):
                     output += "<sym>empty</sym>\n"
-                elif len(wp_data) > 5:
+                elif len(wp_data) > 3:
                     output += "<sym>" + \
-                        wp_data[5].replace("'", "") + "</sym>\n"
+                        wp_data[4].replace("'", "") + "</sym>\n"
                 else:
                     output += "<sym>empty</sym>\n"
 
@@ -531,11 +534,13 @@ class NavigationTools(wx.Frame):
             + " KML->GPX Route Parsing Function\n\n"
         )
 
-        dlg = MyDialog(self, "Crunching data, please wait...")
+        dlg = MyDialog(self, "Crunching data, please wait...", self.cwd)
         dlg.Show()
 
         msg += self.navTools.parseKMLRouteFile(
-            self.pathGPX, filename, boatname)
+            self.pathGPX, filename, boatname, 
+            self.settings['TimeZoneDifference'],
+            self.settings['minCourseChange'])
 
         dlg.Destroy()
 
@@ -694,13 +699,12 @@ class NavigationTools(wx.Frame):
             lon = wp["lon"]
             if ctr == 0:
                 output += (
-                    f"({ctr}, '{name}', '{name}', '{lat}', '{lon}'"
+                    f"({ctr}, '{name}', '{lat}', '{lon}'"
                     f", 'harbor', ''),\n"
                 )
                 route = "harbor"
                 first_lat = lat
                 first_lon = lon
-                old_name = name
             if ctr > 0:
                 """
                 -----------------------------------------------------------------
@@ -715,10 +719,9 @@ class NavigationTools(wx.Frame):
                 else:
                     route = "route"
                 output += (
-                    f"({ctr}, '{old_name}', '{name}', '{lat}', '{lon}'"
+                    f"({ctr}, '{name}', '{lat}', '{lon}'"
                     f"', '{route}', '', ''),\n"
                 )
-                old_name = name
             rows.append([name, time, lat, lon, route])
             # print("==> WP ", ctr, "  ", name, "  lat: ", lat, "   lon: ", lon)
             ctr += 1
@@ -743,9 +746,9 @@ class NavigationTools(wx.Frame):
         self.rightPanel.SetValue(self.log + "\n\n")
 
     # --------------------------------------------------------------------------
-    # Event handler to upload a MySQL-query file to the website MySQL DB
+    # Event handler to upload a SQL-query file to the website SQLite DB
     # --------------------------------------------------------------------------
-    def onUploadMySQLFile(self, event):
+    def onUploadSQLFile(self, event):
         """ Upload data from a MySQL query to my two websites """
 
         dlg = wx.ProgressDialog(
@@ -753,7 +756,7 @@ class NavigationTools(wx.Frame):
 
         dlg.Update(33)
 
-        msg1 = uploadMySQLfile(self.toernDirectory, False)
+        msg1 = uploadSQLiteFile(self.toernDirectory, False)
         if not msg1:
             msg1 = "\nError in uploadMySQL('ToernDirectoryTable.sql')!\n"
             # print (msg1)
@@ -763,7 +766,7 @@ class NavigationTools(wx.Frame):
 
         dlg.Update(67)
         filename = self.filename + self.extension["sql"]
-        msg2 = uploadMySQLfile(os.path.join(self.pathSQLite, filename), False)
+        msg2 = uploadSQLiteFile(os.path.join(self.pathSQLite, filename), False)
         if not msg2:
             msg2 = f"\nError in uploadMySQL('{filename}')!\n"
             # print (msg2)
@@ -771,9 +774,8 @@ class NavigationTools(wx.Frame):
             msg2 = msg2["Insert"]["msg"]
             # print("\n%s table %s" %(msg2, filename))
 
-        today = datetime.now()
         msg = (
-            f"==> today.strftime('%Y-%m-%d  %H:%M:%S')"
+            f"==> {datetime.now().strftime('%Y-%m-%d  %H:%M:%S')}"
             f" upload MySQL file to Website."
             f"\nResults for ToernDirectoryTable.sql: {msg1}"
             f"\nResults for {filename}: {msg2} \n\n")
@@ -783,6 +785,8 @@ class NavigationTools(wx.Frame):
 
         self.log = msg + self.log
         self.rightPanel.SetValue(self.log + "\n\n")
+    
+
 
     # --------------------------------------------------------------------------
     # Event handler for Exit this Program
@@ -851,15 +855,21 @@ class NavigationTools(wx.Frame):
 
 
 class MyDialog(wx.Dialog):
-    def __init__(self, parent, title):
+    def __init__(self, parent, title, cwd):
         super(MyDialog, self).__init__(
             parent,
             title=title,
-            size=(280, 50),
+            size=(240, 120),
             style=wx.DEFAULT_DIALOG_STYLE | wx.DIALOG_NO_PARENT,
         )
-        wx.Panel(self, wx.ID_ANY)
+        fname = os.path.join(cwd, "Spinner_Green_Dots.gif")
+        gif = wx.adv.Animation(fname)
+        animation = wx.adv.AnimationCtrl(self, -1, gif)
 
+        self.Centre()
+        self.Show(True)   
+
+        animation.Play()
 
 # --------------------------------------------------------------------------------------------
 # Starting point for this program

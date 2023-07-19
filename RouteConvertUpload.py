@@ -36,7 +36,7 @@ try:
     from shutil import copyfile
     from bs4 import BeautifulSoup
     from NavToolsLib import NavTools
-    from uploadMySQL import uploadMySQLfile, upload_to_mysql_via_php, upload_to_mysql
+    from uploadSQLquery import uploadMySQLfile, upload_to_mysql_via_php, upload_to_mysql
 
 except ImportError as e:
     print("Import error: %s \nAborting the program %s" % (e, __version__))
