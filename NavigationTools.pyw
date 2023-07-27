@@ -34,7 +34,7 @@ contain a <desc></desc> tag with these entry options:
                                  times using the above keywords in add'l lines)
 
 Yellowbrick Google Earth files are available at "yb.tl/racenamexxxx.kml"
-e.g.: https://yb.tl/chicagomac2021.kml
+e.g.: https://yb.tl/chicagomac2023.kml
       https://yb.tl/transsuperior2021.kml
 --------------------------------------------------------------------------------
 """
@@ -893,11 +893,11 @@ if __name__ == "__main__":
         else:
             raise Exception(
                 f"Error reading from configuration file ('{settings['error']}')")
+        # launch the WX app
+        app = wx.App(redirect=True)
+        frame = NavigationTools(settings, navtools)
+        app.MainLoop()
     except:
         print("Error opening the configuration file. Terminating program now.")
-        sys.exit(1)
 
-    # launch the WX app
-    app = wx.App(redirect=True)
-    frame = NavigationTools(settings, navtools)
-    app.MainLoop()
+

@@ -49,41 +49,18 @@ class NavTools:
         self.configFile = 'NavConfig.ini'
         self.genericWPs = ['NM', 'WPT', 'WP', '0']
         self.WPtypes = ['harbor', 'circle', 'service-marina', 'anchorage']
-<<<<<<< HEAD
-        self.sql_header = """DROP TABLE IF EXISTS "Table_Name";
-||||||| c7adc89
-        self.sql_header = """-- Table structure for table "Table_Name"
-=======
-        self.sql_header = """
->>>>>>> 25d20399ee3fb1202e2a079fee117437d4b69228
-CREATE TABLE IF NOT EXISTS "Table_Name" (
-"id" INTEGER UNIQUE,
-"name" TEXT,
-"lat" REAL,
-"lon" REAL,
-"type" TEXT,
-"image" TEXT,
-"notes" TEXT,
-PRIMARY KEY ("id")
-);
-<<<<<<< HEAD
-INSERT INTO "Table_Name" ("id", "name", "lat", "lon", "type", "image", "notes") VALUES\n"""
-||||||| c7adc89
-
-DELETE FROM "Table_Name";
---
--- Dumping data for table "Table_Name"
--- roundtrip	=> if first and last waypoint in the file are the same
--- one-way trip => if first and last waypoint are different
---
-INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "notes") VALUES\n"""
-=======
-
-DELETE FROM "Table_Name";
-
-INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "notes") VALUES\n
-"""
->>>>>>> 25d20399ee3fb1202e2a079fee117437d4b69228
+        self.sql_header = """CREATE TABLE IF NOT EXISTS "Table_Name" (
+        "id" INTEGER UNIQUE,
+        "name" TEXT,
+        "lat" REAL,
+        "lon" REAL,
+        "type" TEXT,
+        "image" TEXT,
+        "notes" TEXT,
+        PRIMARY KEY ("id")
+        );
+        INSERT INTO "Table_Name" ("id", "name", "lat", "lon", "type", "image", "notes") VALUES
+        """
 
     def __str__(self):
         return f"Nav Config is using the init file '{self.configFile}'."
@@ -611,19 +588,9 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
             lat = wp['lat']
             lon = wp['lon']
             if (ctr == 0):
-<<<<<<< HEAD
                 output += "(" + str(ctr)+", '" + name + "', " + \
                     "'" + str(lat) + "', '" + str(lon) + \
                     "', 'harbor', '', ''),\n"
-||||||| c7adc89
-                output += "(" + str(ctr)+", '"+name+"', '" + name + "', " + \
-                    "'" + str(lat) + "', '" + str(lon) + \
-                    "', 'harbor', '', ''),\n"
-=======
-                output += '(' + str(ctr)+', "'+name+'", "' + name
-                output += '", "' + str(lat) + '", "' + str(lon)
-                output += '", "harbor", "", ""),\n'
->>>>>>> 25d20399ee3fb1202e2a079fee117437d4b69228
                 route = 'harbor'
                 first_lat = lat
                 first_lon = lon
@@ -670,19 +637,9 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
                         route = 'none'
                     else:
                         route = 'route'
-<<<<<<< HEAD
                 output += "(" + str(ctr)+", '" + name + \
                     "', " + "'" + str(lat) + "', '" + str(lon) + "', '"
                 output += route + "', '', " + notes + "),\n"
-||||||| c7adc89
-                output += "(" + str(ctr)+", '" + old_name + "', '" + name + \
-                    "', " + "'" + str(lat) + "', '" + str(lon) + "', '"
-                output += route + "', '', " + notes + "),\n"
-=======
-                output += '(' + str(ctr)+', "' + old_name + '", "' + name
-                output += '", "' + str(lat) + '", "' + str(lon)
-                output += '", "' + route + '", "", "' + notes + '"),\n'
->>>>>>> 25d20399ee3fb1202e2a079fee117437d4b69228
             # print(f"from: {old_name}  to: {name}")
             rows.append([ctr, name, lat, lon, route])
             old_lat = float(lat)
@@ -970,7 +927,6 @@ INSERT INTO "Table_Name" ("id", "from", "to", "lat", "lon", "type", "image", "no
             ctr += 1
         msg += (f"\n{ok} out of {ctr} trips where OK\n")
         return msg
-
 
 if __name__ == "__main__":
     """-------------------------------------------------------------------------
