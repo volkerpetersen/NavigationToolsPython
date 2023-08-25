@@ -521,11 +521,37 @@ class NavigationTools(wx.Frame):
     def onParseKMLRouteFile(self, event):
         today = datetime.now()
         filename = self.filename.split(".")[0]
+
         boatname = "ZigZag"
         dlg = wx.TextEntryDialog(self, "Please enter boat name", "Boat name")
         dlg.SetValue(boatname)
         if dlg.ShowModal() == wx.ID_OK:
             boatname = dlg.GetValue()
+        dlg.Destroy()
+
+        raceStart = ""
+        dlg = wx.TextEntryDialog(self, "Please enter race start (yyyy-mm-dd hh:mm)", "Race Start")
+        dlg.SetValue(raceStart)
+        if dlg.ShowModal() == wx.ID_OK:
+            raceStart = dlg.GetValue()
+            raceStart = datetime.strptime(raceStart, "%Y-%m-%d %H:%M")
+        dlg.Destroy()
+
+        watchStart = ""
+        dlg = wx.TextEntryDialog(
+            self, "Please enter watch start (yyyy-mm-dd hh:mm)", "Watch Start")
+        dlg.SetValue(watchStart)
+        if dlg.ShowModal() == wx.ID_OK:
+            watchStart = dlg.GetValue()
+            watchStart = datetime.strptime(watchStart, "%Y-%m-%d %H:%M")
+        dlg.Destroy()
+
+        watchRhythm = ""
+        dlg = wx.TextEntryDialog(
+            self, "Please enter watch length (hrs)", "Watch Length")
+        dlg.SetValue(watchRhythm)
+        if dlg.ShowModal() == wx.ID_OK:
+            watchRhythm = int(dlg.GetValue())
         dlg.Destroy()
 
         msg = (
@@ -540,6 +566,9 @@ class NavigationTools(wx.Frame):
         msg += self.navTools.parseKMLRouteFile(
             self.pathGPX, filename, boatname, 
             self.settings['TimeZoneDifference'],
+            raceStart,
+            watchStart,
+            watchRhythm,
             self.settings['minCourseChange'])
 
         dlg.Destroy()
@@ -754,8 +783,9 @@ class NavigationTools(wx.Frame):
         dlg = wx.ProgressDialog(
             "MySQL Query Upload", "Processing route data....", 100)
 
-        dlg.Update(33)
+        dlg.Update(50)
 
+        """
         msg1 = uploadSQLiteFile(self.toernDirectory, False)
         if not msg1:
             msg1 = "\nError in uploadMySQL('ToernDirectoryTable.sql')!\n"
@@ -763,8 +793,9 @@ class NavigationTools(wx.Frame):
         else:
             msg1 = msg1["Insert"]["msg"]
             # print("\n%s table ToernDirectoryTable.sql" %msg1)
-
         dlg.Update(67)
+        """
+        
         filename = self.filename + self.extension["sql"]
         msg2 = uploadSQLiteFile(os.path.join(self.pathSQLite, filename), False)
         if not msg2:
@@ -777,7 +808,7 @@ class NavigationTools(wx.Frame):
         msg = (
             f"==> {datetime.now().strftime('%Y-%m-%d  %H:%M:%S')}"
             f" upload MySQL file to Website."
-            f"\nResults for ToernDirectoryTable.sql: {msg1}"
+            #f"\nResults for ToernDirectoryTable.sql: {msg1}"
             f"\nResults for {filename}: {msg2} \n\n")
 
         if isinstance(dlg, wx.ProgressDialog):

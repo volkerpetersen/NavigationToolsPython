@@ -211,7 +211,7 @@ class NavTools:
             homeport                    (designates the Waypoint from which a round-trip
                                         toern originates. Add departure and arrival
                                         times using the above keywords in add'l lines)
-                                        all date are in the in the format yyyy-mm-dd hh:mm
+                                        all dates are in the in the format yyyy-mm-dd hh:mm
 
         Args:
             xml (string):   xml code with all the route information from the OpenCPN gpx file
@@ -273,13 +273,15 @@ class NavTools:
                 desc = desc.text.lower()
                 if (desc.startswith('homeport') and wpCTR == 0):
                     if ('departure' in desc):
-                        desc_arr = desc.split('\n')
+                        desc_arr = desc.split('departure ')
                         desc = desc_arr[1]
+                        leg_start_date = self.StringToDateTime(desc, dateFormats)
 
                 if (desc.startswith('homeport') and wpCTR > 0):
                     if ('arrival' in desc):
-                        desc_arr = desc.split('\n')
+                        desc_arr = desc.split('arrival ')
                         desc = desc_arr[1]
+                        leg_end_date = self.StringToDateTime(desc, dateFormats)
 
                 if (desc.startswith('departure')):
                     time = desc.replace('departure ', '')
@@ -552,7 +554,11 @@ class NavTools:
 
         outputFile = open(fn2, "w")
 
-        output = self.sql_header.replace('Table_Name', filename)
+        if('Table_Name' in self.sql_header):
+            output = self.sql_header.replace('Table_Name', filename)
+        else:
+            print(f"missing or incorrect sql_header file:\n'{self.sql_header}'")
+            return False
 
         ctr = 0
         wp_ctr = 1
@@ -679,7 +685,7 @@ class NavTools:
         dt = datetime.strptime(t, "%Y-%m-%d %H:%M")
         return (dt+timedelta(hours=timezoneDifference))
 
-    def parseKMLRouteFile(self, pathGPX, filename, boatname, timezoneDifference, minCourseChange):
+    def parseKMLRouteFile(self, pathGPX, filename, boatname, timezoneDifference, raceStart, watchStart, watchRhythm, minCourseChange):
         """--------------------------------------------------------------------------
         Method to parse the waypoint and route information from a .kml 
         file into a GPS file. Only after a course change of at least
@@ -692,6 +698,9 @@ class NavTools:
             filename (string): name of the file
             boatname (string): name of the boat in the .kml file
             timezoneDifference (float): racecourse timezone difference to UTC
+            raceStart (datetime): start of the race
+            watchStart (datetime): race course time of watch schedule start
+            watchRhythm (int): number of watch hrs on/off
             minCourseChange (float): minimum course change before a new WP is generated
 
         Return:
@@ -771,45 +780,72 @@ class NavTools:
                 gpx = gpx.replace("nameX", filename)
                 gpx = gpx.replace("RANDOM", rndDigits)
                 lastHDG = 999
-                lastWP = locations[0].contents[0].split(",")
-                lastT = self.getTime(times[0].text, timezoneDifference)
+                watchStartFlag = False
+                raceStartFlag = False
+                elapsed = timedelta(seconds=0)
+                wp = ""
+                watchChange = False
+                startCtr = 0
                 for ctr in range(0, len(locations)):
                     # location info is stored as longitute latitude string pairs
                     latlon = locations[ctr].contents[0].split(",")
-                    hdg = self.calc_heading(lastWP[1], lastWP[0], latlon[1], latlon[0])
                     
-                    # only add a WP if we had a course change larger than minCourseChange
-                    if(ctr==0 or ctr==len(locations)-1 or abs(hdg-lastHDG) > minCourseChange):
-                        #print(f"ctr: {ctr}  wpCTR: {wpCTR}  hdg: {hdg:.2f}")
-                        #print(f"{lastWP[1]}  {lastWP[0]} - {latlon[1]}  {latlon[0]}")
-                        rndDigits = (f"{random.randint(0, 0xFFFFFFFFFFFF):12x}")
-                        wp = gpxRouteWP
-                        wp = wp.replace("RANDOM", rndDigits)
-                        wp = wp.replace("latX", latlon[1])
-                        wp = wp.replace("lonX", latlon[0])
-                        wp = wp.replace("timeX", times[ctr].contents[0])
-                        wp = wp.replace("wpX", "NM{:05d}".format(wpCTR+1))
-                        currentT = self.getTime(times[ctr].text, timezoneDifference)
+                    currentT = self.getTime(
+                        times[ctr].text, timezoneDifference)
+                    if not raceStartFlag and currentT >= raceStart:
+                        raceStartFlag = True
+                        startCtr = ctr     # initialize startCtr
+                        lastWP = latlon    # initialize lastWP
+                        lastT = currentT   # initialize lastT
+                    if not watchStartFlag and currentT >= watchStart:
+                        watchStartFlag = True
+                    if watchStartFlag:
                         elapsed = currentT - lastT
-                        strT = currentT.strftime("%Y-%m-%d %H:%M")
-                        if ctr == 0:
+                    if raceStartFlag:
+                        hdg = self.calc_heading(lastWP[1], lastWP[0], latlon[1], latlon[0])
+                        if elapsed.total_seconds() >= watchRhythm*60*60:
+                            watchChange = True
+                                                                   # only add a WP if
+                        if(startCtr == ctr or                      # race start
+                           watchChange or                          # watch change
+                           ctr==len(locations)-1                   # last waypoint
+                           or abs(hdg-lastHDG) > minCourseChange): # a course change larger than minCourseChange
+                            #print(f"ctr: {ctr}  wpCTR: {wpCTR}  hdg: {hdg:.2f}")
+                            #print(f"{lastWP[1]}  {lastWP[0]} - {latlon[1]}  {latlon[0]}")
+                            rndDigits = (
+                                f"{random.randint(0, 0xFFFFFFFFFFFF):12x}")
+                            wp = gpxRouteWP
+                            wp = wp.replace("RANDOM", rndDigits)
+                            wp = wp.replace("latX", latlon[1])
+                            wp = wp.replace("lonX", latlon[0])
+                            wp = wp.replace("timeX", times[ctr].contents[0])
+                            wp = wp.replace("wpX", "NM{:05d}".format(wpCTR+1))
+                            strT = currentT.strftime("%Y-%m-%d %H:%M")
                             wp = wp.replace("empty", "diamond")
-                            wp = wp.replace(
-                                "</name>", f"</name>\n   <desc>departure {strT}</desc>")
-                        if ctr == len(locations)-1:
-                            wp = wp.replace("empty", "diamond")
-                            wp = wp.replace(
-                                "</name>", f"</name>\n   <desc>arrival {strT}</desc>")
-                            elapsed = currentT - currentT
-                        if elapsed.total_seconds() > 4*60*60:
-                            wp = wp.replace(
-                                "</name>", f"</name>\n   <desc>timedleg {strT}</desc>")
-                            lastT = currentT
-                        lastHDG = hdg
-                        wpCTR = wpCTR + 1
-                        gpx += wp
-                    # end of conditional clause testing for large enough course changes
-                    lastWP = latlon
+                            if ctr == startCtr:
+                                wp = wp.replace("empty", "diamond")
+                                wp = wp.replace(
+                                    f"</name>", f"</name>\n   <desc>departure {strT}</desc>")
+                                wp = wp.replace(
+                                    "NM{:05d}".format(wpCTR+1), "Race Start")
+                            if ctr == len(locations)-1:
+                                wp = wp.replace("empty", "diamond")
+                                wp = wp.replace(
+                                    "</name>", f"</name>\n   <desc>arrival {strT}</desc>")
+                                elapsed = timedelta(seconds=0)
+                            if watchChange:
+                                wp = wp.replace(
+                                    "NM{:05d}".format(wpCTR+1), strT)
+                                wp = wp.replace(
+                                    "</name>", f"</name>\n   <desc>timedleg {strT}</desc>")
+                                lastT = currentT
+                                watchChange = False
+                            lastHDG = hdg
+                            wpCTR = wpCTR + 1
+                            gpx += wp
+                        # end of conditional clause testing for new waypoint
+                        lastWP = latlon
+                    # end of conditional clause for race start
                 # of of loop over all waypoint in the KML file
                 gpx += gpxRouteEnd
                 outputfile.write(gpx)
