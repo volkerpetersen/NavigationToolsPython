@@ -4,9 +4,9 @@ ECHO Please Wait...
 
 
 :: Section 1: Execute python script.
-ECHO ===============================
-ECHO Python Python_Website_Login.py
-ECHO ===============================
+ECHO ========================
+ECHO Python_Website_Login.py
+ECHO ========================
 e:
 cd "E:\My Documents\Google Drive\ProgramCode\Python_Projects\NavigationTools"
 python.exe bplaced_ToernWebsite_Login.py

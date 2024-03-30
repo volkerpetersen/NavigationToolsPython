@@ -94,7 +94,7 @@ def web_login(browser, url, username, password):
             print("logging into '%s' user account '%s' now..." %
                   (url, username))
 
-            sleep(30)
+            sleep(60)
 
             field = browser.find_element(By.CLASS_NAME, "menu_nav_lastlogin")
             # print ("browser.findElement By.CLASS_NAME(): %s" %field.text)

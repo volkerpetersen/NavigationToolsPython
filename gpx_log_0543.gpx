@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+            <gpx creator="OpenCPN" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:opencpn="http://www.opencpn.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+            <rte>
+            <name>gpx_log_0543</name>
+            <extensions>
+                <opencpn:guid>715affff-de7d-4094-9e87-c9bca7a7369d</opencpn:guid>
+                <opencpn:viz>1</opencpn:viz>
+                <opencpn:sharedWPviz>0</opencpn:sharedWPviz>
+                <opencpn:start>Start</opencpn:start>
+                <opencpn:end>End</opencpn:end>
+                <opencpn:planned_speed>5.00</opencpn:planned_speed>
+                <opencpn:time_display>PC</opencpn:time_display>
+                <gpxx:RouteExtension>
+                    <gpxx:IsAutoNamed>false</gpxx:IsAutoNamed>
+                </gpxx:RouteExtension>
+            </extensions>
+            <rtept lat="52.450657" lon="-97.240410">
+            <time>2021-03-16T01:05:00Z</time>
+            <name>NM0001_Stbd</name>
+            <sym>Symbol-X-Large-Green</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-925daf47f3e1</opencpn:guid>
+                <opencpn:viz_name>1</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="52.783990" lon="-97.273744">
+            <time>2021-03-16T01:15:00Z</time>
+            <name>NM0002</name>
+            <sym>empty</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-b3b5a0c86e10</opencpn:guid>
+                <opencpn:viz_name>0</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="53.117324" lon="-97.307077">
+            <time>2021-03-16T01:25:00Z</time>
+            <name>NM0003</name>
+            <sym>empty</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-6e6d7f05eba8</opencpn:guid>
+                <opencpn:viz_name>0</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="53.450657" lon="-97.323744">
+            <time>2021-03-16T01:35:00Z</time>
+            <name>NM0004</name>
+            <sym>empty</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-c7c06d087314</opencpn:guid>
+                <opencpn:viz_name>0</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="53.783990" lon="-97.357077">
+            <time>2021-03-16T01:45:00Z</time>
+            <name>NM0005</name>
+            <sym>empty</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-3b7384f7321d</opencpn:guid>
+                <opencpn:viz_name>0</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="54.117324" lon="-97.390410">
+            <time>2021-03-16T01:55:00Z</time>
+            <name>NM0006</name>
+            <sym>empty</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf- 20ef37567d1</opencpn:guid>
+                <opencpn:viz_name>0</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="54.483990" lon="-97.423744">
+            <time>2021-03-16T04:00:00Z</time>
+            <name>NM0007_Port</name>
+            <sym>Symbol-X-Large-Red</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-8e19e5d442dd</opencpn:guid>
+                <opencpn:viz_name>1</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="54.583990" lon="-97.423744">
+            <time>2021-03-16T07:00:00Z</time>
+            <name>NM0008_Stbd</name>
+            <sym>Symbol-X-Large-Green</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-974753c350dc</opencpn:guid>
+                <opencpn:viz_name>1</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="54.950657" lon="-97.473744">
+            <time>2021-03-16T10:00:00Z</time>
+            <name>NM0009_Port</name>
+            <sym>Symbol-X-Large-Red</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-b00f40795d7d</opencpn:guid>
+                <opencpn:viz_name>1</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="55.450657" lon="-97.523744">
+            <time>2021-03-16T13:00:00Z</time>
+            <name>NM0010_Stbd</name>
+            <sym>Symbol-X-Large-Green</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-b7137bc4e0f2</opencpn:guid>
+                <opencpn:viz_name>1</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="55.783990" lon="-97.557077">
+            <time>2021-03-16T15:00:00Z</time>
+            <name>NM0011_8:00_Position</name>
+            <sym>diamond</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf- 84038eb757d</opencpn:guid>
+                <opencpn:viz_name>1</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="55.950657" lon="-97.573744">
+            <time>2021-03-16T16:00:00Z</time>
+            <name>NM0012_Port</name>
+            <sym>Symbol-X-Large-Red</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-fef248957714</opencpn:guid>
+                <opencpn:viz_name>1</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="56.450657" lon="-97.623744">
+            <time>2021-03-16T19:00:00Z</time>
+            <name>NM0013_Stbd</name>
+            <sym>Symbol-X-Large-Green</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-9c1524751e15</opencpn:guid>
+                <opencpn:viz_name>1</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            <rtept lat="57.117324" lon="-97.673744">
+            <time>2021-03-16T22:00:00Z</time>
+            <name>NM0014_Port</name>
+            <sym>Symbol-X-Large-Red</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-e2b7639bb6aa</opencpn:guid>
+                <opencpn:viz_name>1</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            

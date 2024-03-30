@@ -12,5 +12,12 @@
             "console": "integratedTerminal",
             "justMyCode": true
         }
+        {
+            "name": "C: Current File",
+            "type": "C",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
     ]
 }

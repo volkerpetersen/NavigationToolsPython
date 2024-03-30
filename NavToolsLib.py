@@ -46,6 +46,11 @@ except ImportError as e:
 
 class NavTools:
     def __init__(self):
+        # same values as used in the Toerns Website "plotroute.html"
+        # calculations match Expedition but not OpenCPN
+        # Earth RADIUS (in km) as per Google Maps converted to nm
+        self.KM_NM = 0.539956803            # km to nm conversion factor
+        self.RADIUS = 6378.2334*self.KM_NM  # earth radius in nm
         self.configFile = 'NavConfig.ini'
         self.genericWPs = ['NM', 'WPT', 'WP', '0']
         self.WPtypes = ['harbor', 'circle', 'service-marina', 'anchorage']
@@ -61,6 +66,38 @@ class NavTools:
         );
         INSERT INTO "Table_Name" ("id", "name", "lat", "lon", "type", "image", "notes") VALUES
         """
+        self.gpxHeader = """<?xml version="1.0" encoding="utf-8"?>
+            <gpx creator="OpenCPN" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:opencpn="http://www.opencpn.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+            <rte>
+            <name>nameX</name>
+            <extensions>
+                <opencpn:guid>715affff-de7d-4094-9e87-RANDOM</opencpn:guid>
+                <opencpn:viz>1</opencpn:viz>
+                <opencpn:sharedWPviz>0</opencpn:sharedWPviz>
+                <opencpn:start>Start</opencpn:start>
+                <opencpn:end>End</opencpn:end>
+                <opencpn:planned_speed>5.00</opencpn:planned_speed>
+                <opencpn:time_display>PC</opencpn:time_display>
+                <gpxx:RouteExtension>
+                    <gpxx:IsAutoNamed>false</gpxx:IsAutoNamed>
+                </gpxx:RouteExtension>
+            </extensions>
+            """
+        self.gpxWaypoint = """<rtept lat="latX" lon="lonX">
+            <time>timeX</time>
+            <name>wpX</name>
+            <sym>empty</sym>
+            <type>WPT</type>
+            <extensions>
+                <opencpn:guid>715bffff-e783-458a-87cf-RANDOM</opencpn:guid>
+                <opencpn:viz_name>0</opencpn:viz_name>
+                <opencpn:auto_name>1</opencpn:auto_name>
+                <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
+                <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
+            </extensions>
+            </rtept>
+            """
+        self.gpxFooter = "</rte></gpx>\n"
 
     def __str__(self):
         return f"Nav Config is using the init file '{self.configFile}'."
@@ -460,9 +497,11 @@ class NavTools:
 
     def calc_distance(self, latFrom, lonFrom, latTo, lonTo):
         """--------------------------------------------------------------------------
-            Method to compute the distance between two lat/lon positions
-            in nautical miles (nm)
+            Method to compute the great-circle distance between two 
+            lat/lon positions in nautical miles (nm)
+            This Method uses the 'haversine' formula
             Calculations match Expedition but not OpenCPN
+            https://www.movable-type.co.uk/scripts/latlong.html
 
         Args:
             latFrom (float): starting point latitude in degress
@@ -474,11 +513,6 @@ class NavTools:
             (float) distance in nm
         """
 
-        # same values as used in the Toerns Website "plotroute.html"
-        # calculations match Expedition but not OpenCPN
-        # Earth RADIUS (in km) as per Google Maps converted to nm
-        KM_NM = 0.539956803       # km to nm conversion factor
-        RADIUS = 6378.2334*KM_NM  # earth radius in nm
         dLat = math.radians(latTo - latFrom)
         dLon = math.radians(lonTo - lonFrom)
         lat1 = math.radians(latFrom)
@@ -488,7 +522,7 @@ class NavTools:
              + math.sin(dLon / 2.0) * math.sin(dLon/2.0)
              * math.cos(lat1) * math.cos(lat2)
              )
-        return (RADIUS * 2.0 * math.atan2(math.sqrt(a), math.sqrt(1-a)))
+        return (self.RADIUS * 2.0 * math.atan2(math.sqrt(a), math.sqrt(1-a)))
 
     def StringToDateTime(self, dateString, dateFormats):
         """--------------------------------------------------------------------------
@@ -685,6 +719,21 @@ class NavTools:
         dt = datetime.strptime(t, "%Y-%m-%d %H:%M")
         return (dt+timedelta(hours=timezoneDifference))
 
+    def strRANDOMreplace(self, gpxSTR):
+        """--------------------------------------------------------------------------
+        Method to modify the GPX string RANDOM placeholder with a random number
+
+        Args:
+            gpxSTR (string): string with RANDOM placeholder to be modified
+
+        Return:
+            (string) GPX string
+        """
+        rndDigits = (f"{random.randint(0, 0xFFFFFFFFFFFF):12x}")
+        gpx = gpxSTR.replace("RANDOM", rndDigits)
+        return gpx
+
+
     def parseKMLRouteFile(self, pathGPX, filename, boatname, timezoneDifference, raceStart, watchStart, watchRhythm, minCourseChange):
         """--------------------------------------------------------------------------
         Method to parse the waypoint and route information from a .kml 
@@ -709,36 +758,6 @@ class NavTools:
 
         log_msg = ""
         ctr = 0
-
-        gpxRoute = """<?xml version="1.0" encoding="utf-8"?>
-    <gpx creator="OpenCPN" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:opencpn="http://www.opencpn.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
-    <rte>
-    <name>nameX</name>
-    <extensions>
-      <opencpn:guid>715affff-de7d-4094-9e87-RANDOM</opencpn:guid>
-      <opencpn:viz>1</opencpn:viz>
-      <opencpn:start>Start</opencpn:start>
-      <opencpn:end>End</opencpn:end>
-      <opencpn:planned_speed>5.00</opencpn:planned_speed>
-      <opencpn:time_display>PC</opencpn:time_display>
-    </extensions>
-    """
-
-        gpxRouteWP = """<rtept lat="latX" lon="lonX">
-    <time>timeX</time>
-    <name>wpX</name>
-    <sym>empty</sym>
-    <type>WPT</type>
-    <extensions>
-      <opencpn:guid>715bffff-e783-458a-87cf-RANDOM</opencpn:guid>
-      <opencpn:viz_name>0</opencpn:viz_name>
-      <opencpn:auto_name>1</opencpn:auto_name>
-      <opencpn:arrival_radius>0.050</opencpn:arrival_radius>
-      <opencpn:waypoint_range_rings colour="#FF0000" number="0" step="-1" units="0" visible="false"/>
-    </extensions>
-    </rtept>
-    """
-        gpxRouteEnd = "</rte></gpx>\n"
 
         try:
             pathKML = os.path.join(pathGPX, filename+".kml")
@@ -775,10 +794,8 @@ class NavTools:
             if len(locations) != 0 and len(locations) == len(times):
 
                 # build the GPX route file
-                rndDigits = (f"{random.randint(0, 0xFFFFFFFFFFFF):12x}")
-                gpx = gpxRoute
+                gpx = self.strRANDOMreplace(self.gpxHeader)
                 gpx = gpx.replace("nameX", filename)
-                gpx = gpx.replace("RANDOM", rndDigits)
                 lastHDG = 999
                 watchStartFlag = False
                 raceStartFlag = False
@@ -812,10 +829,7 @@ class NavTools:
                            or abs(hdg-lastHDG) > minCourseChange): # a course change larger than minCourseChange
                             #print(f"ctr: {ctr}  wpCTR: {wpCTR}  hdg: {hdg:.2f}")
                             #print(f"{lastWP[1]}  {lastWP[0]} - {latlon[1]}  {latlon[0]}")
-                            rndDigits = (
-                                f"{random.randint(0, 0xFFFFFFFFFFFF):12x}")
-                            wp = gpxRouteWP
-                            wp = wp.replace("RANDOM", rndDigits)
+                            wp = self.strRANDOMreplace(self.gpxWaypoint)
                             wp = wp.replace("latX", latlon[1])
                             wp = wp.replace("lonX", latlon[0])
                             wp = wp.replace("timeX", times[ctr].contents[0])
@@ -847,7 +861,7 @@ class NavTools:
                         lastWP = latlon
                     # end of conditional clause for race start
                 # of of loop over all waypoint in the KML file
-                gpx += gpxRouteEnd
+                gpx += self.gpxFooter
                 outputfile.write(gpx)
 
                 log_msg += (
