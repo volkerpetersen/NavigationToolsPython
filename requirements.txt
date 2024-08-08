@@ -1,0 +1,23 @@
+# library requirements for all the NavigationTools apps
+# pip install -r requirements.txt
+python-dateutil
+wheel
+tabulate
+Cython
+matplotlib
+openpyxl
+plotly
+progressbar2
+numpy
+pandas
+scipy
+statsmodels
+wxPython
+bs4
+pymysql
+html5lib
+mlxtend
+selenium
+paramiko
+pynmeagps
+pypdf

@@ -1,0 +1,143 @@
+
+=================================================
+File Renamer App ended: 2024/06/20 at 07:57:26 
+=================================================
+
+==> Created weather routing report 'E:\My Documents\Google Drive\ProgramCode\Python_Projects\WeatherRouting_Analysis\SoCal300_2024_Analysis.pdf'
+
+==> Navigation Tools App launched: 2024/06/20 at 07:56:03
+Using input file 'E:\My Documents\Google Drive\ProgramCode\Python_Projects\WeatherRouting_Analysis\SoCal300_2024.csv'
+
+--------------------------------------------------------------------------------
+The 'Navigation Tools App' integrates various tools into one GUI.
+The tools convert route data between various file formats (gpx, kml, sql, spot).
+In addition the software can upload SQL files to the Toern website and compute
+route statistics.
+
+OpenCPN to MySQL Waypoint legend:
+    Generic WP name options-------> NMxxx, WPxxx, WPTxxx, or 0xxx
+    Diamonds/non-Generic WP name--> regular WP on route
+    Diamonds/Generic WP name------> non-visible WP on route
+    Empty-------------------------> non-visible WP on route
+    Circle------------------------> Harbor
+    Service-Marina----------------> Harbor
+    Anchorage---------------------> Mooring / Anchorage
+
+The program computes the Time, Speed, and Etmals between WPs that
+contain a <desc></desc> tag with these entry options:
+    arrival 2019-09-25 19:30    (arrival date/time at this WP)
+    departure 2019-09-26 09:37  (departure date/time from this WP)
+    timedleg 2019-09-26 09:37   (arrival and departure at/from this WP)
+    poi                         (Point of Interest on route not being listed)
+    homeport                    (designates the Waypoint from which a round-trip
+                                 toern originates. Add departure and arrival
+                                 times using the above keywords in add'l lines)
+
+Yellowbrick Google Earth files are available at "yb.tl/racenamexxxx.kml"
+e.g.: https://yb.tl/chicagomac2023.kml
+      https://yb.tl/transsuperior2021.kml
+--------------------------------------------------------------------------------
+
+=================================================
+File Renamer App ended: 2024/01/18 at 14:53:49 
+=================================================
+
+No duplicate waypoint names found in the file
+==> Set route file to: G:\.shortcut-targets-by-id\1DsZjXykNwB4v6cFIaJWsQdEhvm96OMo5\269.zigzag\Expedition_Data_Backup\GPX_Routes\GrandMarais_ThunderBay
+
+==> Navigation Tools App launched: 2024/01/18 at 14:52:45
+Using data from the file 'E:\My Documents\Google Drive\Sailing\OpenCPN_Routes\2023_CYC_Race_to_Mackinac'
+
+--------------------------------------------------------------------------------
+The 'Navigation Tools App' integrates various tools into one GUI.
+The tools convert route data between various file formats (gpx, kml, sql, spot).
+In addition the software can upload SQL files to the Toern website and compute
+route statistics.
+
+OpenCPN to MySQL Waypoint legend:
+    Generic WP name options-------> NMxxx, WPxxx, WPTxxx, or 0xxx
+    Diamonds/non-Generic WP name--> regular WP on route
+    Diamonds/Generic WP name------> non-visible WP on route
+    Empty-------------------------> non-visible WP on route
+    Circle------------------------> Harbor
+    Service-Marina----------------> Harbor
+    Anchorage---------------------> Mooring / Anchorage
+
+The program computes the Time, Speed, and Etmals between WPs that
+contain a <desc></desc> tag with these entry options:
+    arrival 2019-09-25 19:30    (arrival date/time at this WP)
+    departure 2019-09-26 09:37  (departure date/time from this WP)
+    timedleg 2019-09-26 09:37   (arrival and departure at/from this WP)
+    poi                         (Point of Interest on route not being listed)
+    homeport                    (designates the Waypoint from which a round-trip
+                                 toern originates. Add departure and arrival
+                                 times using the above keywords in add'l lines)
+
+Yellowbrick Google Earth files are available at "yb.tl/racenamexxxx.kml"
+e.g.: https://yb.tl/chicagomac2023.kml
+      https://yb.tl/transsuperior2021.kml
+--------------------------------------------------------------------------------
+
+=================================================
+File Renamer App ended: 2023/12/20 at 19:25:02 
+=================================================
+
+==> Evaluated route 2023_CYC_Race_to_Mackinac
+
+WP Name             Lat      Lon        Distance    Time    Speed    Etmal
+------------------  -------  -------  ----------  ------  -------  -------
+CYC Belmond Harbor  41.882N  87.616W        0.00    0.00     0.00     0.00
+Start               41.877N  87.582W        3.23    0.00     0.00     0.00
+NM00067             42.279N  87.329W       27.69    5.22     5.31   127.41
+NM00090             42.759N  87.274W       30.25    4.58     6.60   158.41
+NM00102             43.289N  87.101W       32.83    4.75     6.91   165.89
+NM00114             43.758N  86.767W       32.29    4.25     7.60   182.32
+NM00137             43.980N  86.677W       14.72    4.08     3.61    86.54
+NM00156             44.456N  86.441W       32.36    5.00     6.47   155.32
+NM00179             44.794N  86.197W       25.07    4.17     6.02   144.43
+NM00208             45.087N  85.921W       24.50    4.42     5.55   133.15
+NM00227             45.219N  85.782W       10.64    4.17     2.55    61.29
+NM00254             45.291N  85.681W        6.15    4.42     1.39    33.41
+NM00276             45.461N  85.491W       13.47    4.92     2.74    65.75
+NM00290             45.692N  85.260W       19.45    4.08     4.76   114.34
+NM00314             45.823N  84.934W       18.80    4.50     4.18   100.26
+NM00333             45.840N  84.632W       13.38    4.17     3.21    77.09
+Finish              45.843N  84.617W        0.66    0.47     1.41    33.78
+Mackinac Island     45.849N  84.616W        0.56    0.70     0.80    19.17
+
+Total Trip Distance:    306.07nm
+Timed Legs Distance:    302.83nm   (98.94%)
+Average Speed:               4.74kts
+
+==> Navigation Tools App launched: 2023/12/20 at 19:23:55
+Using data from the file 'G:\My Drive\Sailing\OpenCPN_Routes\2023_CYC_Race_to_Mackinac'
+
+--------------------------------------------------------------------------------
+The 'Navigation Tools App' integrates various tools into one GUI.
+The tools convert route data between various file formats (gpx, kml, sql, spot).
+In addition the software can upload SQL files to the Toern website and compute
+route statistics.
+
+OpenCPN to MySQL Waypoint legend:
+    Generic WP name options-------> NMxxx, WPxxx, WPTxxx, or 0xxx
+    Diamonds/non-Generic WP name--> regular WP on route
+    Diamonds/Generic WP name------> non-visible WP on route
+    Empty-------------------------> non-visible WP on route
+    Circle------------------------> Harbor
+    Service-Marina----------------> Harbor
+    Anchorage---------------------> Mooring / Anchorage
+
+The program computes the Time, Speed, and Etmals between WPs that
+contain a <desc></desc> tag with these entry options:
+    arrival 2019-09-25 19:30    (arrival date/time at this WP)
+    departure 2019-09-26 09:37  (departure date/time from this WP)
+    timedleg 2019-09-26 09:37   (arrival and departure at/from this WP)
+    poi                         (Point of Interest on route not being listed)
+    homeport                    (designates the Waypoint from which a round-trip
+                                 toern originates. Add departure and arrival
+                                 times using the above keywords in add'l lines)
+
+Yellowbrick Google Earth files are available at "yb.tl/racenamexxxx.kml"
+e.g.: https://yb.tl/chicagomac2023.kml
+      https://yb.tl/transsuperior2021.kml
+--------------------------------------------------------------------------------

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+            <gpx creator="OpenCPN" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:opencpn="http://www.opencpn.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+            <rte>
+            <name>gpx_log</name>
+            <extensions>
+                <opencpn:guid>715affff-de7d-4094-9e87- 7ff75820425</opencpn:guid>
+                <opencpn:viz>1</opencpn:viz>
+                <opencpn:start>Start</opencpn:start>
+                <opencpn:end>End</opencpn:end>
+                <opencpn:planned_speed>5.00</opencpn:planned_speed>
+                <opencpn:time_display>PC</opencpn:time_display>
+            </extensions>
+            </rte></gpx>
