@@ -94,15 +94,23 @@ def web_login(browser, url, username, password):
             print("logging into '%s' user account '%s' now..." %
                   (url, username))
 
-            sleep(60)
+            for ctr in range(8):
+                try:
+                    field = browser.find_element(By.CLASS_NAME, "info_lastlogin")
+                except Exception as e:
+                    print(F"waiting for login attempt {ctr+1}/8")
+                    field = None
+                    sleep(15)
 
-            field = browser.find_element(By.CLASS_NAME, "menu_nav_lastlogin")
-            # print ("browser.findElement By.CLASS_NAME(): %s" %field.text)
-            # file = open("browser.txt", 'w')
-            # file.write(browser.page_source)
-            # file.close()
-            # print ("browser content written to file")
-            text = field.text
+            if field is None:
+                text = F"Login attempt timed out after 2min...."
+            else:
+                # print ("browser.findElement By.CLASS_NAME(): %s" %field.text)
+                # file = open("browser.txt", 'w')
+                # file.write(browser.page_source)
+                # file.close()
+                # print ("browser content written to file")
+                text = field.text
 
         browser.quit()
 
@@ -143,7 +151,7 @@ if __name__ == "__main__":
 
     print("\nlaunching Firefox browser...")
 
-    url = "https://my.bplaced.net/php"
+    url = "https://my.bplaced.net"
     cwd = pathlib.Path(__file__).parent.absolute()
     filename = "bplaced_login.log"
     logFile = os.path.join(cwd, filename)

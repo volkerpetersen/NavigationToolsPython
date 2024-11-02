@@ -21,6 +21,7 @@ try:
     import time
     from pypdf import PdfWriter
     import subprocess
+    import numpy as np
 
 except ImportError as e:
     print(
@@ -36,9 +37,10 @@ plt.style.use('ggplot')
 # global plot parameters
 linewidth = 1                  # linewidth for all lines
 markerSize = 5                 # marker size for line plots
-barColor = 'steelblue'  # marker color for scatter plots
+barColor = 'steelblue'         # marker color for scatter plots
 gridColor = 'dimGrey'          # color of the plot grids
-figsize = (13, 8)              # size of all plot windows
+colorMap = 'YlOrBr'            # colormap 'cool, 'Accent'
+figsize = (9, 12)              # size of all plot windows
 
 def save_plot(name, fig, addToList=True, showPlot=False):
     """---------------------------------------------------------------------
@@ -95,18 +97,23 @@ def read_Expedition_Routing_Analysis(path, filename):
     
     twa = ['n/a']
     summary = {'tws': {}, 'twa': {}, 'sails': {}, 'hours': 0}
+    dist = []
 
     with open(filepath) as csv_file:
         windFlag = False
         sailFlag = False
         reader = csv.reader(csv_file)
+        r = 0
         for row in reader:
             if windFlag and len(row) and len(row[0]):
                 if row[0] not in summary['tws']:
                     tws = f"{row[0]}"
                     summary['tws'][tws] = 0
+                    dist.append([])
+                    dist[r] = []
                 for idx in range(1,len(row)):
                     try:
+                        dist[r].append(float(row[idx]))
                         summary['twa'][twa[idx]] += float(row[idx])
                         summary['tws'][tws] += float(row[idx])
                         summary['hours'] += float(row[idx])
@@ -115,6 +122,7 @@ def read_Expedition_Routing_Analysis(path, filename):
                         print(row)
                         summary = {}
                         return summary
+                r = r + 1
             if sailFlag and len(row) and len(row[0]):
                 if row[0] not in summary['sails']:
                     summary['sails'][row[0]] = float(row[1])
@@ -133,15 +141,16 @@ def read_Expedition_Routing_Analysis(path, filename):
             if not len(row) or not len(row[0]):
                 windFlag = False
                 sailFlag = False
+    summary['distribution'] = np.array(dist) / summary['hours'] * 100
     return summary
 
-def create_one_page_report(exp, routingPath, inputFile):
+def create_two_page_report(exp, routingPath, inputFile):
     xlabel = f"Percentage of {exp['hours']:.2f} hrs race"
     figCtr = 1
-    fig = plt.figure(figCtr, figsize=(8,12))
+    fig = plt.figure(figCtr, figsize=figsize)
     axs = fig.subplots(nrows=3, ncols=1, sharex=False)
     
-    # first subplot
+    # Page 1: first subplot
     percent = [val / exp['hours'] for val in list(exp['tws'].values())]
     ax = axs[0]
     ax.barh(list(exp['tws'].keys()), 
@@ -154,7 +163,7 @@ def create_one_page_report(exp, routingPath, inputFile):
     ax.set_title("TWS Distribution")
     ax.set_ylabel("TWS (kts)")
 
-    # second subplot
+    # Page 1: second subplot
     percent = [val / exp['hours'] for val in list(exp['twa'].values())]
     ax = axs[1]
     ax.barh(list(exp['twa'].keys()), 
@@ -167,7 +176,7 @@ def create_one_page_report(exp, routingPath, inputFile):
     ax.set_title("TWA Distribution")
     ax.set_ylabel("TWA (degrees)")
 
-    # third subplot
+    # Page 1: third subplot
     percent = [val / exp['hours'] for val in list(exp['sails'].values())]
     ax = axs[2]
     ax.barh(list(exp['sails'].keys()), 
@@ -181,16 +190,52 @@ def create_one_page_report(exp, routingPath, inputFile):
     ax.set_ylabel("Sails")
     ax.set_xlabel(xlabel)
 
-    name = inputFile.replace(".csv", "_Analysis.pdf")
-    fname = os.path.normpath(os.path.join(routingPath, name))
+    name = os.path.normpath(os.path.join(routingPath, "page1.pdf"))
+    save_plot(name, fig, addToList=True, showPlot=False)
 
-    success = save_plot(fname, fig, addToList=False, showPlot=False)
-    if success:
-        return fname
-    else:
-        return None
+    # Page 2: fourth subplot plot the TWA / TWD distribution
+    data = exp['distribution']
+    data[data == 0] = np.nan
+    tws = list(range(40, 1, -2))
+    twa = list(range(10, 190, 10))
+    figCtr += 1
 
-def create_three_page_report(exp, routingPath, inputFile):
+    
+    fig, axs = plt.subplots(1, 1, figsize=figsize)
+    im = plt.imshow(data, cmap=colorMap, norm='linear', interpolation='none', vmin=0)
+    fig.colorbar(im, ax=axs, location='bottom')
+    axs.set_ylabel('TWS (kts)')
+    axs.set_xlabel('TWA (degrees)')
+    axs.set_title('TWA / TWS distribution (percent of time)')
+    axs.set_xticks(np.arange(len(twa)), labels=twa)
+    axs.set_yticks(np.arange(len(tws)), labels=tws)
+    plt.grid(color=gridColor, linestyle='dotted')
+    fig.tight_layout()
+    
+    """
+    y, x = np.indices(data.shape)
+    x = x.flatten()
+    y = y.flatten()
+    colors = data.flatten()
+    figCtr += 1
+    fig = plt.figure(figCtr, figsize=figsize)
+    axs = fig.add_subplot(111)
+    #im = axs.scatter(x, y, c=colors, cmap='Accent')
+    im = axs.pcolormesh(data, cmap='Accent')
+    fig.colorbar(im, ax=axs, location='bottom')
+    axs.set_title('TWA / TWS distribution (percent of time)')
+    axs.set_xticks(np.arange(len(twa)), labels=twa)
+    axs.set_yticks(np.arange(len(tws)), labels=tws)
+    fig.tight_layout()
+    """
+
+    name = os.path.normpath(os.path.join(routingPath, "page2.pdf"))
+    save_plot(name, fig, addToList=True, showPlot=False)
+    
+    filename = mergePDFList(pdfList, inputFile)
+    return filename
+
+def create_four_page_report(exp, routingPath, inputFile):
     xlabel = f"Percentage of {exp['hours']:.2f} hrs race"
     figCtr = 1
     fig = plt.figure(figCtr, figsize=figsize)
@@ -243,7 +288,31 @@ def create_three_page_report(exp, routingPath, inputFile):
     name = os.path.normpath(os.path.join(routingPath, "sails.pdf"))
     save_plot(name, fig, addToList=True, showPlot=False)
 
+    # plot the TWA / TWD distribution
+    data = exp['distribution']
+    data[data == 0] = np.nan
+    tws = list(range(40, 1, -2))
+    twa = list(range(10, 190, 10))
+    figCtr += 1
+    fig = plt.figure(figCtr, figsize=figsize)
+    ax1 = fig.add_subplot(111)
+    im1 = ax1.imshow(data, cmap=colorMap, norm='linear', interpolation='none', vmin=0)
+    plt.grid(color=gridColor, linestyle='dotted')
+    fig.colorbar(im1)
+    plt.ylabel('TWS (kts)')
+    plt.xlabel('TWA (degrees)')
+    plt.title('TWA / TWS distribution (percent of time)')
+    ax1.set_xticks(np.arange(len(twa)), labels=twa)
+    ax1.set_yticks(np.arange(len(tws)), labels=tws)
+    fig.tight_layout()
+    
+    name = os.path.normpath(os.path.join(routingPath, "distribution.pdf"))
+    save_plot(name, fig, addToList=True, showPlot=False)
 
+    filename = mergePDFList(pdfList, inputFile)
+    return filename
+
+def mergePDFList(pdfList, inputFile):
     mergedPDF = PdfWriter()
     for pdfName in pdfList:
         title = os.path.basename(pdfName)
@@ -286,18 +355,18 @@ def create_three_page_report(exp, routingPath, inputFile):
             f"ERROR: Failed {io_retries} attempts to save the PDF '{filename}'\nSkipping this PDF.")
 
     return filename
-
+    
 def create_Expedition_Routing_Report(path, fname, pages=1):
     exp = read_Expedition_Routing_Analysis(path, fname)
-
+    
     report = None
     if len(exp):
-        if pages == 1:
-            report = create_one_page_report(exp, path, fname)
-        elif pages == 3:
-            report = create_three_page_report(exp, path, fname)
+        if pages == 2:
+            report = create_two_page_report(exp, path, fname)
+        elif pages == 4:
+            report = create_four_page_report(exp, path, fname)
         else:
-            print(f"\nInvalid report request ({pages}) - choices are 1 or 3.\n")
+            print(f"\nInvalid report request ({pages}) - choices are 2 or 4.\n")
 
     if report:
        subprocess.Popen(report,shell=True) 
@@ -310,10 +379,12 @@ if __name__ == "__main__":
     rootPath = os.path.dirname(scriptPath)
     routingPath = os.path.join(rootPath, "WeatherRouting_Analysis")
     
-    fileName = "ATI_2024.csv"
-    report = create_Expedition_Routing_Report(routingPath, fileName, pages=1)
+    fileName = "TransPac_2023.csv"
+    report = create_Expedition_Routing_Report(routingPath, fileName, pages=2)
     
     if report:
-        print(f"PDF report at:\n{routingPath} {report}")
+        print(f"PDF report at:\n{report}")
+    else:
+        print(f"ERROR. Failed to create a PDF report for:\n{routingPath}\\{fileName}")
     
     print("\nDone!")

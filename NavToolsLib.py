@@ -210,8 +210,8 @@ class NavTools:
                 print(f"Last Input file......: '{lastFile}'")
                 print(f"Skip WPs.............: '{rawSettings['skipWP']}'")
                 print(f"No Speed.............: '{rawSettings['noSpeed']}'")
-                print(f"Timezone Difference..: {rawSettings['TimeZoneDifference']:.1f} hrs between race course and UTC")
-                print(f"Minimum Course Change: {rawSettings['minCourseChange']:.2f} degrees")
+                print(f"Timezone Difference..:  {rawSettings['TimeZoneDifference']:.1f} hrs between race course and UTC")
+                print(f"Minimum Course Change:  {rawSettings['minCourseChange']:.2f} degrees")
                 print(f"Verbose..............: '{rawSettings['verbose']}'")
 
             settings['cwd'] = cwd
